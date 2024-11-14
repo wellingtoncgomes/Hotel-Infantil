@@ -1,0 +1,23 @@
+{
+  "name": "hotelinfantil",
+  "version": "1.0.0",
+  "description": "Projeto extensão 2 - hotel Infantil - pedacinho de ceu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "projeto extensão",
+    "hotel Infantil"
+  ],
+  "author": "Wellington da Cruz Gomes",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "joi": "^17.13.3",
+    "mysql2": "^3.11.3",
+    "nodemon": "^3.1.7"
+  }
+}
