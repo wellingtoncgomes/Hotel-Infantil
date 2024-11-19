@@ -1,0 +1,224 @@
+<br><br> <br><br><br><br>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        /* Estilo CSS básico */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000; /* Fundo da página */
+            background-image:  url('../Fotos/301574100_473434758123354_3225942101932288981_n.jpg');
+            background-size: cover;
+            background-position: center; 
+        }
+
+        #gameContainer {
+            position: relative;
+        }
+
+        canvas {
+            border: 2px solid #fff;
+            background-color: #000; /* Fundo do canvas */
+        }
+
+        #playButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="pongCanvas" width="800" height="400"></canvas>
+        <button id="playButton">Play</button>
+    </div>
+    <script>
+        const canvas = document.getElementById("pongCanvas");
+        const context = canvas.getContext("2d");
+        const playButton = document.getElementById("playButton");
+
+        // Variáveis do jogo
+        const paddleWidth = 100;
+        const paddleHeight = 10;
+        const ballRadius = 20;
+        const player = {
+            x: canvas.width / 2 - paddleWidth / 2,
+            y: canvas.height - paddleHeight,
+            width: paddleWidth,
+            height: paddleHeight,
+            dx: 0
+        };
+        const ball = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: ballRadius,
+            speed: 3.5,
+            dx: 4,
+            dy: 4,
+            letter: 'A'
+        };
+        let isGameRunning = false;
+
+        // Carregar a imagem de fundo
+        const bgImage = new Image();
+        bgImage.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiH18XUHh5QTamCJnHC6Q9wLMv3Yd00eMpWmwtIg3a89YARtZkUtNKZ-fEEIjcKrIj3lBuQzYAOHulyGCZ2a0H-IisFs7b5ToWmOoJ1anEeLClgEmt8uSbbCDl5uPJ33x1Q0Ol0h-c5jrpRVGU8wsK7FsEBjCzs4heLwV5XSRyBqxp8t7qLJdsx4hauiIcv/s1600/Sem%20t%C3%ADtulo.png';
+
+        // Funções de desenho
+        function drawPaddle(x, y, width, height) {
+            context.fillStyle = "#fff";
+            context.fillRect(x, y, width, height);
+        }
+
+        function drawBall(x, y, radius, letter) {
+            context.beginPath();
+            context.arc(x, y, radius, 0, Math.PI * 2);
+            context.fillStyle = "#fff";
+            context.fill();
+            context.closePath();
+
+            context.fillStyle = "#000";
+            context.font = "16px Arial";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(letter, x, y);
+        }
+
+        // Desenhar a imagem de fundo
+        function drawBackground() {
+            context.drawImage(bgImage, 0, 0, canvas.width, canvas.height);
+        }
+
+        // Movimento do jogador
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft") {
+                player.dx = -5;
+            } else if (e.key === "ArrowRight") {
+                player.dx = 5;
+            }
+        });
+      
+      // Event listener para a barra de espaço
+      document.addEventListener("keydown", (e) => {
+    if (e.key === " ") { // Verifica se a tecla pressionada é a barra de espaço
+        if (!isGameRunning) { // Verifica se o jogo não está em execução
+            isGameRunning = true;
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx = 3.5;
+            ball.dy = 3.5;
+            player.x = canvas.width / 2 - paddleWidth / 2;
+            gameLoop();
+
+            // Esconder o botão Play
+            playButton.style.display = "none";
+        }
+    }
+});
+
+      
+      
+      
+      
+
+        document.addEventListener("keyup", (e) => {
+            if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+                player.dx = 0;
+            }
+        });
+
+        // Atualizar posição do jogador e da bola
+        function update() {
+            player.x += player.dx;
+            if (player.x < 0) {
+                player.x = 0;
+            } else if (player.x + paddleWidth > canvas.width) {
+                player.x = canvas.width - paddleWidth;
+            }
+
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Detectar colisões com a parede superior e inferior
+            if (ball.y - ball.radius < 0) {
+                ball.dy *= -1;
+            }
+
+            // Detectar colisões com a parede esquerda e direita
+            if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+                ball.dx *= -1;
+            }
+
+            // Detectar colisões com o jogador
+            if (ball.y + ball.radius > player.y &&
+                ball.x > player.x && ball.x < player.x + player.width) {
+                ball.dy *= -1;
+                changeBallLetter();
+            }
+
+            // Verificar se a bola saiu pela parte inferior
+            if (ball.y - ball.radius > canvas.height) {
+                isGameRunning = false;
+              playButton.style.display = "block"; // Mostrar o botão Play novamente
+                alert("Game Over! A bola não bateu na barra inferior.");
+              
+              
+              
+              
+            }
+        }
+
+        // Função para desenhar o jogo
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            drawBackground();
+            drawPaddle(player.x, player.y, player.width, player.height);
+            drawBall(ball.x, ball.y, ball.radius, ball.letter);
+        }
+
+        // Função para mudar a letra da bola
+        function changeBallLetter() {
+            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let currentIndex = alphabet.indexOf(ball.letter);
+            ball.letter = alphabet[(currentIndex + 1) % alphabet.length];
+        }
+
+        // Loop do jogo
+        function gameLoop() {
+            if (isGameRunning) {
+                update();
+                draw();
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // Iniciar o jogo
+        playButton.addEventListener("click", () => {
+            isGameRunning = true;
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx = 3.5;
+            ball.dy = 3.5;
+            player.x = canvas.width / 2 - paddleWidth / 2;
+            gameLoop();
+
+            // Esconder o botão Play
+            playButton.style.display = "none";
+        });
+    </script>
+</body>
+</html>

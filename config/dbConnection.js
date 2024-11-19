@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 const host = 'localhost';
-const database = 'museu';
+const database = 'hotelInfantil';
 const user = 'root';
 const password = '1234';
 

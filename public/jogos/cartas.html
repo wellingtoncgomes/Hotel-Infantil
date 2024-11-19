@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Cartas</title>
+    <style>
+        body {
+            padding: 0;         
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000; /* Fundo da página */
+            background-image:  url('../Fotos/301574100_473434758123354_3225942101932288981_n.jpg');
+            background-size: cover;
+            background-position: center;
+
+
+        }
+
+        #gameContainer {
+            width: 420px; /* Largura ajustada para acomodar 25 cartas */
+            background-color: #008000;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* Layout de grade 5x5 */
+            gap: 10px;
+        }
+
+        .card {
+            width: 70px;
+            height: 90px;
+            background-color: #fff;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer"></div>
+    <script>
+        const suits = ['\u2660', '\u2663', '\u2665', '\u2666']; // ♠ ♣ ♥ ♦
+        const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        let deck = [];
+        let flippedCards = [];
+
+        // Cria um baralho de 25 cartas com pares correspondentes (total 12 pares e 1 carta extra)
+        for (let i = 0; i < 12; i++) {
+            const suit = suits[Math.floor(i / 3)]; // Distribui os naipes uniformemente
+            const value = values[i % 13]; // Distribui os valores uniformemente
+            deck.push({ suit, value, isFlipped: false });
+            deck.push({ suit, value, isFlipped: false }); // Adiciona o par correspondente
+        }
+        // Adiciona uma carta extra para completar 25 cartas
+        deck.push({ suit: suits[0], value: values[12], isFlipped: false });
+
+        // Embaralha o baralho
+        deck = deck.sort(() => Math.random() - 0.5);
+
+        // Cria as cartas na tela
+        const gameContainer = document.getElementById('gameContainer');
+        for (let i = 0; i < deck.length; i++) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.index = i; // Adiciona um atributo de dados com o índice da carta no baralho
+            gameContainer.appendChild(card);
+
+            card.addEventListener('click', () => {
+                if (!deck[i].isFlipped && flippedCards.length < 2) {
+                    card.textContent = `${deck[i].value}${deck[i].suit}`;
+                    deck[i].isFlipped = true;
+                    flippedCards.push({ card, index: i }); // Armazena a carta e seu índice
+                    if (flippedCards.length === 2) {
+                        checkMatch();
+                    }
+                }
+            });
+        }
+
+        // Verifica se as duas cartas viradas são iguais
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            if (deck[card1.index].value === deck[card2.index].value &&
+                deck[card1.index].suit === deck[card2.index].suit) {
+                // As cartas são iguais
+                flippedCards = []; // Limpa as cartas viradas
+            } else {
+                // As cartas são diferentes
+                setTimeout(() => {
+                    card1.card.textContent = '';
+                    card2.card.textContent = '';
+                    deck[card1.index].isFlipped = false;
+                    deck[card2.index].isFlipped = false;
+                    flippedCards = []; // Limpa as cartas viradas
+                }, 1000);
+            }
+        }
+
+        // Mostra todas as cartas brevemente antes de iniciar o jogo
+        function showAllCardsBriefly() {
+            for (let i = 0; i < deck.length; i++) {
+                const card = document.querySelector(`.card[data-index='${i}']`);
+                card.textContent = `${deck[i].value}${deck[i].suit}`;
+            }
+
+            setTimeout(() => {
+                for (let i = 0; i < deck.length; i++) {
+                    const card = document.querySelector(`.card[data-index='${i}']`);
+                    card.textContent = '';
+                }
+            }, 3000); // Mostra as cartas por 3 segundos
+        }
+
+        // Inicia o jogo mostrando todas as cartas brevemente
+        showAllCardsBriefly();
+    </script>
+</body>
+</html>
