@@ -1,5 +1,8 @@
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
-const port = process.env.PORT ||3000;
+
+const port = process.env.PORT ||443;
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -9,8 +12,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('views','./app/views');
 
-app.listen(port,function(){
-    console.log('Servidor rodando na porta',port);
+
+const sslOptions = {
+    key: fs.readFileSync('C:/Users/Wellington/OneDrive/Área de Trabalho/Atividade IFSP/4ºSemestre/web/HotelInfantil/config/key.pem'),
+    cert: fs.readFileSync('C:/Users/Wellington/OneDrive/Área de Trabalho/Atividade IFSP/4ºSemestre/web/HotelInfantil/config/cert.pem'),
+};
+
+https.createServer(sslOptions, app).listen(port, '0.0.0.0', () => {
+    console.log(`Servidor HTTPS rodando na porta ${port}`);
 });
 
 module.exports=app;
