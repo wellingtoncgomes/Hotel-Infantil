@@ -1,6 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
+const path = require('path');
 
 const port = process.env.PORT ||443;
 
@@ -12,10 +13,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('views','./app/views');
 
-
 const sslOptions = {
-    key: fs.readFileSync('C:/Users/Wellington/OneDrive/Área de Trabalho/Atividade IFSP/4ºSemestre/web/HotelInfantil/config/key.pem'),
-    cert: fs.readFileSync('C:/Users/Wellington/OneDrive/Área de Trabalho/Atividade IFSP/4ºSemestre/web/HotelInfantil/config/cert.pem'),
+    key: fs.readFileSync(path.join(__dirname, 'certs/key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'certs/cert.pem')),
 };
 
 https.createServer(sslOptions, app).listen(port, '0.0.0.0', () => {
