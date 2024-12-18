@@ -1,15 +1,25 @@
 const mysql = require('mysql2');
-const host = 'localhost';
-const database = 'hotelInfantil';
-const user = 'root';
-const password = '1234';
 
-module.exports = ()=>{
-    return dbConn = mysql.createConnection({
-        host: host,
-        database: database,
-        user: user,
-        password: password
-    });   
-}
+// Configuração do banco de dados
+const dbConfig = {
+    host: 'localhost',
+    user: 'root',
+    password: '12345',
+    database: 'hotelInfantil',
+};
 
+// Função para criar a conexão com o banco de dados
+module.exports = () => {
+    const connection = mysql.createConnection(dbConfig);
+
+    // Testando a conexão
+    connection.connect((err) => {
+        if (err) {
+            console.error('Erro ao conectar ao banco de dados:', err);
+        } else {
+            console.log('Conectado ao banco de dados.');
+        }
+    });
+
+    return connection;
+};

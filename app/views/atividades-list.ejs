@@ -6,10 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <ul>
-        <% atividades.forEach(p => { %>
-            <li><%= p.nome %> - <%= p.descricao %> - <%= p.faixa_etaria %></li>
-        <% }); %>
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Faixa Etária</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% atividades.forEach(p => { %>
+            <tr>
+                <td><%= p.nome %></td>
+                <td><%= p.descricao %></td>
+                <td><%= p.faixa_etaria %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
 </body>
 </html>

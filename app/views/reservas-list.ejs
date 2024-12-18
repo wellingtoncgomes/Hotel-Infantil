@@ -1,15 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./styles/reserva.css">
+
+    <title>Lista de Reservas</title>
+
+   
+
 </head>
 <body>
+    <h1>Lista de Reservas</h1>
+
+    <!-- Adicionando a div para criar uma nova reserva -->
+    <div>
+        <h2>Criar Nova Reserva</h2>
+        <form action="/reservas" method="POST">
+            <label for="nome_crianca">Nome da Criança:</label>
+            <select name="id_crianca" required>
+              <option value="">Selecione uma criança</option>
+              <% criancas.forEach(crianca => { %>
+                <option value="<%= crianca.id %>"><%= crianca.nome %></option>
+              <% }); %>
+            </select><br><br>
+             
+          
+
+
+
+            <label for="nome_pai">Nome do Pai:</label>
+            <select name="id_pai" required>
+              <option value="">Selecione um pai</option>
+              <% pais.forEach(pai => { %>
+                <option value="<%= pai.id %>"><%= pai.nome %></option>
+              <% }); %>
+            </select><br><br>
+            
+          
+
+
+            <label for="id_atividade">Atividade:</label>
+            <select name="id_atividade" required>
+              <option value="">Selecione uma atividade</option>
+              <% atividades.forEach(atividade => { %>
+                <option value="<%= atividade.id %>"><%= atividade.nome %></option>
+              <% }); %>
+            </select><br><br>
+            
+          
+            <label for="data_reserva">Data da Reserva:</label>
+            <input type="date" name="data_reserva" required><br>
+          
+            <p><button type="submit">Cadastrar Reserva</button></p>
+          </form>
+          
+    </div>
+
+    <!-- Lista de Reservas (Aqui você provavelmente já tem a exibição das reservas cadastradas) -->
+    <h3>Reservas Cadastradas</h3>
     <ul>
-        <% reservas.forEach(p => { %>
-            <li><%= p.data_reserva %> <%= p.nome_crianca %> <%= p.status_reserva %></li>
+        <% reservas.forEach(reserva => { %>
+            <li>
+                <span>Reserva:</span> <%= reserva.status_reserva %>, 
+                <span>Criança:</span> <%= reserva.nome_crianca %>, 
+                <span>Pai:</span> <%= reserva.nome_pai %>, 
+                <span>Atividade:</span> <%= reserva.nome %>, 
+                <span>Data:</span> <%= reserva.data_reserva %>
+            </li>
         <% }); %>
     </ul>
+    
+
+    <!-- Link para voltar ou adicionar mais funcionalidades -->
+    <a href="/">Voltar para a página inicial</a>
+
+
+
 </body>
 </html>

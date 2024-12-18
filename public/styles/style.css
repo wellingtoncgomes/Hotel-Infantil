@@ -1,156 +1,165 @@
+/* Resetando alguns padrões */
 * {
-    padding: 0;
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    
-  }
-   main{
-    padding: 10px;
-    width: 100%;
-    background-color: #929191;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-   
-  
-    .photo {
-      width: 100%;
-      height: 30%;
-      margin: auto;
-      justify-content: center;
-    }
-  
-  }
-  
-  .header {
-    width: 100%;
-    background-color: #525151;
-    color: white;
-   display: grid;
-  
-  
-  
-    ul {
-      width: 30%;
-      justify-content: space-between;
-      align-items: center;
-      list-style: none;
-      padding: auto;
-      
-      li {
-        
-        margin: 1rem;
-      }
-      a {
-        text-decoration: none;
-        color: white;
-        padding: 10px 20px; 
-        transition: all 0.3s ease; 
-    }
-    
-    a:hover {
-        background-color: white;
-        color: #525151;
-    }
-    }
-  }
-  
-  .conteudo {
-   
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 12px;
-  }
-  .services{
-    display: flex;
-    flex-wrap: wrap;
-}
-  #footer {
-     padding: auto;
-     justify-content: space-between;
-
-     a{
-      padding: 1.5rem;
-     }
-  }
-  
-
-  #profile.services {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#profile.services li {
-    width: 50%; 
-    box-sizing: border-box; 
-    padding: 10px; 
-    list-style: none; 
-    display: grid;
+/* Fonte do site */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #bec0c3;
+  color: #333;
 }
-#component {
-  padding: 0.25rem;
-}
-  @media only screen and (min-width: 768px) {
-  
-    .main {
-        max-width: 2080px;
-        margin: 1rem auto;
-    }
-    .main::before, .main::after {
-        width: 70vw;
-    }
 
-    .header {
-      width: 100%;
-      background-color: #525151;
-      color: white;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    
-    
-      ul {
-        width: 30%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        list-style: none;
-        padding: auto;
-    
-        li {
-          cursor: pointer;
-          margin: 3rem;
-        }
-        a {
-          text-decoration: none;
-          color: white;
-          padding: 10px 20px; 
-          transition: all 0.3s ease; 
-      }
-      
-      a:hover {
-          background-color: white;
-          color: #525151;
-      }
-    }
-    #profile.services {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      padding: 0;
-      margin: 0;
-  }
-  
-  #profile.services li {
-      width: 50%; 
-      box-sizing: border-box; 
-      padding: 10px; 
-      list-style: none; 
-  }
-  }
+/* Estilo do cabeçalho */
+nav {
+  background-color: #ffbb33; /* Amarelo claro */
+  border-bottom: 3px solid #ff8000; /* Laranja */
 }
+
+nav .navbar-nav .nav-link {
+  font-size: 18px;
+  color: #fff;
+  padding: 12px 20px;
+}
+
+nav .navbar-nav .nav-link:hover {
+  background-color: #ff8000; /* Laranja */
+  color: #fff;
+  border-radius: 5px;
+}
+
+.navbar-toggler-icon {
+  background-color: #fff;
+}
+
+/* Botão de Logout */
+.btn.btn-block {
+  background-color: #ff8000;
+  color: white;
+  border: none;
+  font-size: 16px;
+}
+
+.btn.btn-block:hover {
+  background-color: #ff6000;
+}
+
+/* Imagem do perfil e do conteúdo */
+.photo {
+  border-radius: 50%;
+  width: 90%;
+  height: 80%;
+  object-fit: cover;
+  border: 5px solid #ffbb33;
+  align-items: center;
+}
+
+/* Cards de conteúdo */
+.w3-card-4 {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.w3-white {
+  background-color: #ffffff;
+}
+
+/* Títulos e texto */
+h2 {
+  color: #010101;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.fa {
+  color: #090909;
+}
+
+/* Acordeon */
+.acordeon .trigger {
+  background-color: #ff8000;
+  color: white;
+  padding: 15px;
+  width: 100%;
+  text-align: left;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+}
+
+.acordeon .content {
+  padding: 15px;
+  background-color: #ffeb99;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+/* Estilo para as imagens dos jogos */
+.game-img {
+  border-radius: 8px;
+  margin: 10px;
+  transition: transform 0.3s;
+}
+
+.game-img:hover {
+  transform: scale(1.1);
+}
+
+/* Seção de comentários */
+.w3-comments {
+  background-color: #ffecb3;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.w3-comments li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.w3-comments li i {
+  color: #ff8000;
+  font-size: 20px;
+}
+
+.w3-comments li p {
+  color: #666;
+}
+
+/* Rodapé */
+footer {
+  background-color: #ff8000;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  border-top: 3px solid #ffbb33;
+}
+
+footer a {
+  color: #080808;
+  margin: 0 10px;
+  font-size: 24px;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #ffbb33;
+}
+
+footer p {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+
+
+

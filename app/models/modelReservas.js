@@ -13,7 +13,7 @@ module.exports = {
                 a.nome
             FROM Reservas r
             INNER JOIN Criancas c ON r.id_crianca = c.id_crianca
-            INNER JOIN pais p ON r.id_pai = p.id_pai
+            INNER JOIN Pais p ON r.id_pai = p.id_pai
             LEFT JOIN Atividades a ON r.id_atividade = a.id_atividade
         `;
         dbConn.query(sql, callback);
@@ -23,51 +23,50 @@ module.exports = {
     verificarPagamentoPendente: (dbConn, id_pai, callback) => {
         const sql = `
             SELECT 
-                p.id_pai,
-                p.nome AS nome_pai,
                 COUNT(pg.id_pagamento) AS pagamentos_pendentes
             FROM 
-                Pais p
-            LEFT JOIN 
-                Reservas r ON p.id_pai = r.id_pai
+                Reservas r
             LEFT JOIN 
                 Pagamentos pg ON r.id_reserva = pg.id_reserva
             WHERE 
-                p.id_pai = ? AND (pg.status_pagamento = 'Pendente' OR pg.status_pagamento IS NULL)
-            GROUP BY 
-                p.id_pai, p.nome;
+                r.id_pai = ? AND (pg.status_pagamento = 'Pendente' OR pg.status_pagamento IS NULL);
         `;
-    
-        console.log(`Verificando pagamentos pendentes para id_pai: ${id_pai}`);
-    
         dbConn.query(sql, [id_pai], (err, result) => {
             if (err) {
                 return callback(err);
             }
-    
-            // Verificar se existem pagamentos pendentes
-            const pagamentosPendente = result.length > 0 && result[0].pagamentos_pendentes > 0;
-            callback(null, pagamentosPendente);
+            const temPendencia = result.length > 0 && result[0].pagamentos_pendentes > 0;
+            callback(null, temPendencia);
         });
     },
-    
 
-    // Criar uma nova reserva
-    create: (dbConn, data, callback) => {
-        // Verificar se o pai tem pagamento pendente antes de permitir a criação da reserva
-        module.exports.verificarPagamentoPendente(dbConn, data.id_pai, (err, temPendente) => {
-            if (err) {
-                return callback(err);
-            }
-            if (temPendente) {
-                return callback(new Error('Este pai possui um pagamento pendente. Não é possível fazer uma nova reserva.'));
-            }
 
-            const sql = 'INSERT INTO Reservas ( id_crianca,id_pai,data_reserva, id_atividade) VALUES (?, ?, ?, ?)';
-            const values = [data.id_crianca, data.id_pai,data.data_reserva, data.id_atividade];
-            dbConn.query(sql, values, callback);
-        });
-    },
+
+
+// Criar uma nova reserva
+create: (dbConn, data, callback) => {
+    // Garantir que id_pai não seja uma string vazia
+    if (data.id_pai === '') {
+        data.id_pai = null;  // Se for uma string vazia, definir como null
+    }
+
+    // Antes de criar a reserva, verificar pendências
+    module.exports.verificarPagamentoPendente(dbConn, data.id_pai, (err, temPendente) => {
+        if (err) {
+            return callback(err);
+        }
+        if (temPendente) {
+            return callback(new Error('Este pai possui um pagamento pendente. Não é possível fazer uma nova reserva.'));
+        }
+
+        const sql = 'INSERT INTO Reservas (id_crianca, id_pai, data_reserva, id_atividade) VALUES (?, ?, ?, ?)';
+        const values = [data.id_crianca, data.id_pai, data.data_reserva, data.id_atividade];
+        dbConn.query(sql, values, callback);
+    });
+},
+
+
+
 
     // Obter uma reserva específica pelo ID
     getById: (dbConn, id, callback) => {
@@ -78,7 +77,7 @@ module.exports = {
     // Atualizar uma reserva
     update: (dbConn, id, data, callback) => {
         const sql = 'UPDATE Reservas SET data_reserva = ?, status_reserva = ? WHERE id_reserva = ?';
-        const values = [data.data_reserva, data.status, id];
+        const values = [data.data_reserva, data.status_reserva, id];
         dbConn.query(sql, values, callback);
     },
 

@@ -1,22 +1,41 @@
-// app/models/paisModel.js
+const dbConnection = require('../../config/dbConnection');
+
 module.exports = {
-    getAll: (dbConnection, callback) => {
-        const sql = 'SELECT * FROM Pais;';
-        dbConnection.query(sql, callback);
-    },
+  getAll: (dbConn, callback) => {
+    dbConn.query('SELECT * FROM pais', (err, result) => {
+      if (err) return callback(err);
+      callback(null, result);
+    });
+  },
 
-    create: (dbConnection, data, callback) => {
-        const sql = 'INSERT INTO Pais (nome, email, telefone, cpf) VALUES (?, ?, ?, ?);';
-        dbConnection.query(sql, [data.nome, data.email, data.telefone, data.cpf], callback);
-    },
+  create: (dbConn, data, callback) => {
+    const { nome, email, cpf, telefone } = data;
+    dbConn.query(
+      'INSERT INTO pais (nome, email, cpf, telefone) VALUES (?, ?, ?, ?)',
+      [nome, email, cpf, telefone],
+      (err) => {
+        if (err) return callback(err);
+        callback(null);
+      }
+    );
+  },
 
-    update: (dbConnection, id, data, callback) => {
-        const sql = 'UPDATE Pais SET nome = ?, email = ?, telefone = ?, cpf = ? WHERE id_pai = ?;';
-        dbConnection.query(sql, [data.nome, data.email, data.telefone, data.cpf, id], callback);
-    },
+  update: (dbConn, id, data, callback) => {
+    const { nome, email, cpf, telefone } = data;
+    dbConn.query(
+      'UPDATE pais SET nome = ?, email = ?, cpf = ?, telefone = ? WHERE id = ?',
+      [nome, email, cpf, telefone, id],
+      (err) => {
+        if (err) return callback(err);
+        callback(null);
+      }
+    );
+  },
 
-    delete: (dbConnection, id, callback) => {
-        const sql = 'DELETE FROM Pais WHERE id_pai = ?;';
-        dbConnection.query(sql, [id], callback);
-    }
+  delete: (dbConn, id, callback) => {
+    dbConn.query('DELETE FROM pais WHERE id = ?', [id], (err) => {
+      if (err) return callback(err);
+      callback(null);
+    });
+  },
 };

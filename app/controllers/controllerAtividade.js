@@ -1,4 +1,4 @@
-const atividadesModel = require('../models/modelAtividade');
+const atividadesModel = require('../models/modelAtividades');
 const dbConnection = require('../../config/dbConnection');
 
 module.exports = {
@@ -26,8 +26,8 @@ module.exports = {
 
     editAtividade: (req, res) => {
         const dbConn = dbConnection();
-        const { id } = req.params;
-        atividadesModel.update(dbConn, id, req.body, (err) => {
+        const { id_atividade } = req.params;  // Ajuste aqui para usar 'id_atividade'
+        atividadesModel.update(dbConn, id_atividade, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao atualizar atividade');
@@ -38,8 +38,8 @@ module.exports = {
 
     removeAtividade: (req, res) => {
         const dbConn = dbConnection();
-        const { id } = req.params;
-        atividadesModel.delete(dbConn, id, (err) => {
+        const { id_atividade } = req.params;  // Ajuste aqui para usar 'id_atividade'
+        atividadesModel.delete(dbConn, id_atividade, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao excluir atividade');

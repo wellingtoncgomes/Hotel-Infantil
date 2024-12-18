@@ -26,11 +26,12 @@ module.exports = {
         });
     },
 
+
     editPais: (req, res) => {
         const dbConn = dbConnection();
         const { id } = req.params;
-        console.log("aqui",req.params)
-        console.log("aqui",req.body)
+        console.log("aqui", req.params);
+        console.log("aqui", req.body);
         paisModel.update(dbConn, id, req.body, (err) => {
             if (err) {
                 console.error(err);
@@ -39,17 +40,26 @@ module.exports = {
             res.redirect('/pais');
         });
     },
+    
+
+
 
     removePais: (req, res) => {
         const dbConn = dbConnection();
-        const { id } = req.params;
-        console.log("aqui",req.params)
+        const { id } = req.params; // Pega o ID da URL
+        
         paisModel.delete(dbConn, id, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao excluir pai');
             }
-            res.redirect('/pais');
+            res.status(200).send('Pai excluído com sucesso');
         });
     }
+
+
+    
+
+
+
 };

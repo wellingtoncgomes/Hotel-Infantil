@@ -3,13 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/estilo.css">
     <title>Document</title>
 </head>
 <body>
-    <ul>
-        <% orientadores.forEach(p => { %>
-            <li><%= p.nome %> <%= p.especialidade %> </li>
-        <% }); %>
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Especialidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orientadores.forEach(p => { %>
+            <tr>
+                <td><%= p.nome %></td>
+                <td><%= p.especialidade %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
 </body>
 </html>
