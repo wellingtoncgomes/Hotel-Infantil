@@ -2,10 +2,14 @@ const https = require('https');
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
+const dotenv = require('dotenv');
 
-const port = process.env.PORT ||443;
+dotenv.config({ path: './.env' });
+
+const port = process.env.PORT || 3443;
 
 const app = express();
+const bcrypt = require('bcrypt');
 app.set('view engine', 'ejs');
 
 app.use(express.static('./public'));
