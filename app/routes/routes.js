@@ -24,29 +24,34 @@ module.exports = (app) => {
    app.post('/criancas/edit/:id', editCrianca);
    app.get('/criancas/delete/:id', removeCrianca);
 
+  // Rotas relacionadas aos 'Orientadores'
    app.get('/orientadores', listOrientadores);
    app.post('/orientadores', createOrientador);
    app.post('/orientadores/edit/:id', editOrientador);
    app.get('/orientadores/delete/:id', removeOrientador);
 
+   // Rotas relacionadas as 'Atividades'
    app.get('/atividades', listAtividades);
    app.post('/atividades', createAtividade);
    app.post('/atividades/edit/:id', editAtividade);
    app.get('/atividades/delete/:id', removeAtividade);
 
+   // Rotas relacionadas a 'Reservas'
    app.get('/reservas', listReservas);
    app.post('/reservas', createReserva);
    app.post('/reservas/edit/:id', editReserva);
    app.get('/reservas/delete/:id', removeReserva);
 
+   // Rotas relacionadas a 'PAgamentos'
    app.get('/pagamentos', listPagamentos);
    app.post('/pagamentos', createPagamento);
    app.post('/pagamentos/edit/:id', updatePagamento);
    app.get('/pagamentos/delete/:id', removePagamento);
 
-    app.get('/cardapio', listCardapio);
-    app.post('/cardapio', createCardapio);
-    app.post('/cardapio/edit/:id', updateCardapio); 
-    app.get('/cardapio/delete/:id', removeCardapio);
+   // Rotas relacionadas a 'Cardapio' 
+   app.get('/cardapio', listCardapio);
+   app.post('/cardapio', createCardapio);
+   app.post('/cardapio/edit/:id', updateCardapio); 
+   app.get('/cardapio/delete/:id', removeCardapio);
 
   };
