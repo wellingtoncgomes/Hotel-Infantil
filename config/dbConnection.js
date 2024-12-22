@@ -1,11 +1,11 @@
 const mysql = require('mysql2');
-<<<<<<< HEAD
+//<<<<<<< HEAD
 const host = 'localhost';
 const database = 'hotelInfantil';
 const user = 'root';
 const password = '';
-=======
->>>>>>> 9ef67a6de8a8a3ba15c5c8e2acf1209f6f2127a3
+//=======
+//>>>>>>> 9ef67a6de8a8a3ba15c5c8e2acf1209f6f2127a3
 
 // Configuração do banco de dados
 const dbConfig = {
