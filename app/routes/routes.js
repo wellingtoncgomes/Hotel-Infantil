@@ -1,11 +1,15 @@
 const {home,addComment}= require('../controllers/controllerHome');
-const {listPais,createPais,editPais,removePais} = require('../controllers/controllerPais')
-const {listCriancas,createCrianca,editCrianca,removeCrianca} = require('../controllers/controllerCriancas')
-const {listOrientadores,createOrientador,editOrientador,removeOrientador} = require('../controllers/controllerOrientadores')
+const {listPais, createPais, editPais, removePais} = require('../controllers/controllerPais');
+const {listCriancas,createCrianca,editCrianca,removeCrianca} = require('../controllers/controllerCriancas');
+const {listOrientadores,createOrientador,editOrientador,removeOrientador} = require('../controllers/controllerOrientadores');
 const { listAtividades, createAtividade, editAtividade, removeAtividade } = require('../controllers/controllerAtividade');
 const { listReservas, createReserva, editReserva, removeReserva } = require('../controllers/controllerReserva');
 const { listPagamentos, createPagamento, updatePagamento, removePagamento } = require('../controllers/controllerPagamentos');
 const { listCardapio, createCardapio, updateCardapio, removeCardapio } = require('../controllers/controllerCardapio');
+const controllerfaleconosco = require('../controllers/controllerfale-conosco');
+
+
+
 
 
 module.exports = (app) => {
@@ -15,9 +19,31 @@ module.exports = (app) => {
   // Rotas relacionadas a 'Pais'
   app.get('/pais', listPais);
   app.post('/pais', createPais);
-  app.post('/pais/edit/:id', editPais);
-  app.get('/pais/delete/:id', removePais);
+
+  app.put('/pais/edit/:id', editPais);
+  app.delete('/pais/delete/:id', removePais);
+
+
   
+  
+  app.get('/fale-conosco', controllerfaleconosco.getPage);
+
+  // Rota para processar o envio da mensagem de 'Fale Conosco'
+  app.post('/fale-conosco/enviar', controllerfaleconosco.sendMessage);
+
+
+  // Rota para exibir a página de cadastro de pais
+  app.get('/pais/cadastrar', (req, res) => {
+  res.render('cadastro-pais');  // Vamos criar a view "cadastro-pais.ejs"
+});
+
+// Rota para cadastrar o pai no banco de dados
+app.post('/pais/cadastrar', createPais);
+
+
+
+
+
    // Rotas relacionadas a 'Criancas'
    app.get('/criancas', listCriancas);
    app.post('/criancas', createCrianca);
@@ -35,8 +61,13 @@ module.exports = (app) => {
    app.post('/atividades', createAtividade);
    app.post('/atividades/edit/:id', editAtividade);
    app.get('/atividades/delete/:id', removeAtividade);
+   
 
+<<<<<<< HEAD
    // Rotas relacionadas a 'Reservas'
+=======
+   
+>>>>>>> 9ef67a6de8a8a3ba15c5c8e2acf1209f6f2127a3
    app.get('/reservas', listReservas);
    app.post('/reservas', createReserva);
    app.post('/reservas/edit/:id', editReserva);

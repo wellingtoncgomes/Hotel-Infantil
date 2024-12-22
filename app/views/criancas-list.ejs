@@ -6,10 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <ul>
-        <% criancas.forEach(p => { %>
-            <li><%= p.nome %> <%= p.idade %> <%= p.alergias %></li>
-        <% }); %>
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+                <th>Alergias</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% criancas.forEach(p => { %>
+            <tr>
+                <td><%= p.nome %></td>
+                <td><%= p.idade %></td>
+                <td><%= p.alergias %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
 </body>
 </html>

@@ -1,8 +1,6 @@
-const dbConnection = require('../../config/dbConnection');
-
 module.exports = {
     getAll: (dbConn, callback) => {
-        const sql = 'SELECT * FROM Criancas';
+        const sql = 'SELECT id_crianca AS id, nome FROM Criancas';
         dbConn.query(sql, callback);
     },
 
@@ -17,13 +15,11 @@ module.exports = {
         dbConn.query(sql, [id], callback);
     },
 
-
     update: (dbConn, id, data, callback) => {
         const sql = 'UPDATE Criancas SET nome = ?, idade = ?, alergias = ?, id_pai = ? WHERE id_crianca = ?';
         const values = [data.nome, data.idade, data.alergias, data.id_pai, id];
         dbConn.query(sql, values, callback);
     },
-
 
     delete: (dbConn, id, callback) => {
         const sql = 'DELETE FROM Criancas WHERE id_crianca = ?';

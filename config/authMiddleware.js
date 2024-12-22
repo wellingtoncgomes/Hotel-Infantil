@@ -19,3 +19,5 @@ function authorizeAdmin(req, res, next) {
 }
 
 module.exports = { authenticate, authorizeAdmin };
+
+

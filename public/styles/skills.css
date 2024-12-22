@@ -1,3 +1,73 @@
+/* Centraliza o formulário na página */
+form {
+    max-width: 600px; /* Limita a largura máxima do formulário */
+    margin: 50px auto; /* Centraliza horizontalmente e adiciona espaçamento vertical */
+    padding: 20px;
+    background-color: #f9f9f9; /* Fundo leve para destacar o formulário */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ajusta os labels */
+  form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Ajusta os inputs e textarea */
+  form input[type="text"],
+  form input[type="email"],
+  form textarea {
+    width: 80%; /* Ocupa 80% da largura do formulário */
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+    box-sizing: border-box;
+  }
+  
+  /* Ajusta os botões */
+  form button {
+    width: 80%; /* Ocupa 80% da largura do formulário */
+    height: 40px;
+    margin: 10px auto; /* Adiciona espaçamento e centraliza */
+    display: block;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  form button[type="submit"] {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+  }
+  
+  form button:hover {
+    opacity: 0.9; /* Suave destaque ao passar o mouse */
+  }
+  
+  form button[onclick] {
+    background-color: blue; /* Azul */
+    color: white;
+  }
+  
+  h1{
+text-align: center;
+
+  }
+
+
+
+
+
 .skills {
     display: flex;
     flex-direction: column;

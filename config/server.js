@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './.env' });
 
-const port = process.env.PORT || 3443;
+const port = process.env.PORT ||443;
 
 const app = express();
 const bcrypt = require('bcrypt');

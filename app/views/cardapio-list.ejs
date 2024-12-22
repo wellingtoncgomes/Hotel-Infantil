@@ -6,10 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <ul>
-        <% cardapio.forEach(p => { %>
-            <li><%= p.nome %> - <%= p.descricao %> - <%= p.dia_semana %></li>
-        <% }); %>
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Dia da Semana</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% cardapio.forEach(p => { %>
+            <tr>
+                <td><%= p.nome %></td>
+                <td><%= p.descricao %></td>
+                <td><%= p.dia_semana %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    
 </body>
 </html>

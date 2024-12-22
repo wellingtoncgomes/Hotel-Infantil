@@ -68,3 +68,12 @@ CREATE TABLE Cardapio (
     tipo ENUM('Café', 'Almoço', 'Lanche') NOT NULL,
     dia_semana ENUM('Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo') NOT NULL
 );
+
+-- Tabela Contato
+CREATE TABLE contato (
+id INT AUTO_INCREMENT PRIMARY KEY,     
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(150) NOT NULL,
+mensagem TEXT NOT NULL,
+data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
