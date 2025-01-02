@@ -11,7 +11,7 @@
     "projeto extensão",
     "hotel Infantil"
   ],
-  "author": "Wellington da Cruz Gomes, Renato Luciano dos Santos",
+  "author": "Wellington da Cruz Gomes, Renato Luciano dos Santos, Daniele Costa",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

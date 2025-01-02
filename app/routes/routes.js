@@ -1,44 +1,58 @@
-const {home,addComment}= require('../controllers/controllerHome');
-const {listPais, createPais, editPais, removePais} = require('../controllers/controllerPais');
-const {listCriancas,createCrianca,editCrianca,removeCrianca} = require('../controllers/controllerCriancas');
-const {listOrientadores,createOrientador,editOrientador,removeOrientador} = require('../controllers/controllerOrientadores');
+const { home, addComment } = require('../controllers/controllerHome');
+const { listPais, createPais, editPais, removePais } = require('../controllers/controllerPais');
+const { listCriancas, createCrianca, editCrianca, removeCrianca } = require('../controllers/controllerCriancas');
+const { listOrientadores, createOrientador, editOrientador, removeOrientador } = require('../controllers/controllerOrientadores');
 const { listAtividades, createAtividade, editAtividade, removeAtividade } = require('../controllers/controllerAtividade');
 const { listReservas, createReserva, editReserva, removeReserva } = require('../controllers/controllerReserva');
 const { listPagamentos, createPagamento, updatePagamento, removePagamento } = require('../controllers/controllerPagamentos');
 const { listCardapio, createCardapio, updateCardapio, removeCardapio } = require('../controllers/controllerCardapio');
 const controllerfaleconosco = require('../controllers/controllerfale-conosco');
+const { validarUsuario } = require('../../config/validarUser');
+const { criarUsuario, authenticateUser, adicionarUsuario } = require('../controllers/controllerAuthUser');
+const { adicionarUsuario } = require('../controllers/controllerAuthUser');
+//const { criarUsuario } = require('../models/modelAuthUser');
 
 
 
 
 
 module.exports = (app) => {
-  // Rota para a página inicial
-  app.get('/', home);
-
-  // Rotas relacionadas a 'Pais'
-  app.get('/pais', listPais);
-  app.post('/pais', createPais);
-
-  app.put('/pais/edit/:id', editPais);
-  app.delete('/pais/delete/:id', removePais);
+   // Rota para a página inicial
+   app.get('/', home);
 
 
-  
-  
-  app.get('/fale-conosco', controllerfaleconosco.getPage);
+   //validar e adicionar usuario
+   app.get('/criarUsuario', validarUsuario);
+   app.post('/register', adicionarUsuario);
 
-  // Rota para processar o envio da mensagem de 'Fale Conosco'
-  app.post('/fale-conosco/enviar', controllerfaleconosco.sendMessage);
+   //autenticar usuario
+   app.get('/validarUsuario', authenticateUser);
+   app.post('/userAuth', authenticateUser);
 
 
-  // Rota para exibir a página de cadastro de pais
-  app.get('/pais/cadastrar', (req, res) => {
-  res.render('cadastro-pais');  // Vamos criar a view "cadastro-pais.ejs"
-});
+   // Rotas relacionadas a 'Pais'
+   app.get('/pais', listPais);
+   app.post('/pais', createPais);
 
-// Rota para cadastrar o pai no banco de dados
-app.post('/pais/cadastrar', createPais);
+   app.put('/pais/edit/:id', editPais);
+   app.delete('/pais/delete/:id', removePais);
+
+
+
+
+   app.get('/fale-conosco', controllerfaleconosco.getPage);
+
+   // Rota para processar o envio da mensagem de 'Fale Conosco'
+   app.post('/fale-conosco/enviar', controllerfaleconosco.sendMessage);
+
+
+   // Rota para exibir a página de cadastro de pais
+   app.get('/pais/cadastrar', (req, res) => {
+      res.render('cadastro-pais');  // Vamos criar a view "cadastro-pais.ejs"
+   });
+
+   // Rota para cadastrar o pai no banco de dados
+   app.post('/pais/cadastrar', createPais);
 
 
 
@@ -50,7 +64,7 @@ app.post('/pais/cadastrar', createPais);
    app.post('/criancas/edit/:id', editCrianca);
    app.get('/criancas/delete/:id', removeCrianca);
 
-  // Rotas relacionadas aos 'Orientadores'
+   // Rotas relacionadas aos 'Orientadores'
    app.get('/orientadores', listOrientadores);
    app.post('/orientadores', createOrientador);
    app.post('/orientadores/edit/:id', editOrientador);
@@ -61,12 +75,12 @@ app.post('/pais/cadastrar', createPais);
    app.post('/atividades', createAtividade);
    app.post('/atividades/edit/:id', editAtividade);
    app.get('/atividades/delete/:id', removeAtividade);
-   
+
 
 <<<<<<< HEAD
    // Rotas relacionadas a 'Reservas'
 =======
-   
+
 >>>>>>> 9ef67a6de8a8a3ba15c5c8e2acf1209f6f2127a3
    app.get('/reservas', listReservas);
    app.post('/reservas', createReserva);
@@ -82,7 +96,7 @@ app.post('/pais/cadastrar', createPais);
    // Rotas relacionadas a 'Cardapio' 
    app.get('/cardapio', listCardapio);
    app.post('/cardapio', createCardapio);
-   app.post('/cardapio/edit/:id', updateCardapio); 
+   app.post('/cardapio/edit/:id', updateCardapio);
    app.get('/cardapio/delete/:id', removeCardapio);
 
-  };
+};

@@ -2,6 +2,14 @@ DROP DATABASE IF EXISTS hotelInfantil;
 create database hotelInfantil;
 use hotelInfantil;
 
+-- Tabela Usuários
+CREATE TABLE Users (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
 -- Tabela Pais
 CREATE TABLE Pais (
     id_pai INT AUTO_INCREMENT PRIMARY KEY,
@@ -9,6 +17,8 @@ CREATE TABLE Pais (
     email VARCHAR(100) NOT NULL,
     telefone VARCHAR(15),
     cpf VARCHAR(14) UNIQUE
+    id_user INT,
+    FOREIGN KEY (id_user) REFERENCES Users(id_user) ON DELETE CASCADE
 );
 
 -- Tabela Crianças
