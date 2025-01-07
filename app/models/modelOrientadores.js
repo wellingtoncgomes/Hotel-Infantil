@@ -1,35 +1,42 @@
-const dbConnection = require('../../config/dbConnection');
-
+const pool = require('../../config/dbConnection');
 module.exports = {
     // Obter todos os orientadores
-    getAll: (dbConn, callback) => {
+    getAll: (pool, callback) => {
         const sql = 'SELECT * FROM Orientadores';
-        dbConn.query(sql, callback);
+        pool.query(sql, callback);
     },
+
 
     // Criar um novo orientador
-    create: (dbConn, data, callback) => {
-        const sql = 'INSERT INTO Orientadores (nome, especialidade) VALUES (?, ?)';
-        const values = [data.nome, data.especialidade];
-        dbConn.query(sql, values, callback);
+    create: (pool, data, callback) => {
+        const sql = 'INSERT INTO Orientadores (nome, especialidade, imagem) VALUES ($1, $2, $3)';
+        const values = [data.nome, data.especialidade, data.imagem_url];
+        pool.query(sql, values, callback);
     },
+
 
     // Obter um orientador específico pelo ID
-    getById: (dbConn, id, callback) => {
-        const sql = 'SELECT * FROM Orientadores WHERE id_orientador = ?';
-        dbConn.query(sql, [id], callback);
+    getById: (pool, id, callback) => {
+        const sql = 'SELECT * FROM Orientadores WHERE id_orientador = $1';
+        pool.query(sql, [id], callback);
     },
+
 
     // Atualizar um orientador
-    update: (dbConn, id, data, callback) => {
-        const sql = 'UPDATE Orientadores SET nome = ?, especialidade = ? WHERE id_orientador = ?';
-        const values = [data.nome, data.especialidade, id];
-        dbConn.query(sql, values, callback);
+    update: (pool, data, callback) => {
+        const sql = 'UPDATE Orientadores SET nome = $1, especialidade = $2, imagem = $3 WHERE id_orientador = $4';
+        const values = [data.nome, data.especialidade,  data.imagem_url, data.id_orientador];
+        console.log(values)
+        pool.query(sql, values, callback);
     },
 
+
     // Deletar um orientador
-    delete: (dbConn, id, callback) => {
-        const sql = 'DELETE FROM Orientadores WHERE id_orientador = ?';
-        dbConn.query(sql, [id], callback);
+    delete: (pool, id, callback) => {
+        const sql = 'DELETE FROM Orientadores WHERE id_orientador = $1';
+        pool.query(sql, [id], callback);
     }
 };
+
+
+

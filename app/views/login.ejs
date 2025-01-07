@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/estilo.css">
+    <title>Logar</title>
+</head>
+<body>
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div style="max-width: 600px; flex: 1;">
+      
+      <!-- Formulário de cadastro de novos pais -->
+      <% if (typeof error !== 'undefined' && error) { %>
+        <p style="color: red;"><%= error %></p>
+      <% } %>
+     
+      <div id="login-form" style="display: block; margin-bottom: 30px;">
+        <h1>Logar</h1>
+        <form action="/logar" method="POST">
+   
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+  
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required>
+          </div>
+  
+          <button type="submit">Logar</button><br><br>
+  
+        </form>
+        <button style="background-color: blue; color: white; text-align: center; width: 180px; height: 40px;" onclick="window.location.href='https://localhost:443'"> Voltar </button><br><br>
+      </div>
+
+</body>
+</html>

@@ -1,23 +1,21 @@
 const cardapioModel = require('../models/modelCardapio');
-const dbConnection = require('../../config/dbConnection');
+const pool = require('../../config/dbConnection');
 
 module.exports = {
     // Listar todos os itens do cardápio
     listCardapio: (req, res) => {
-        const dbConn = dbConnection();
-        cardapioModel.getAll(dbConn, (err, result) => {
+        cardapioModel.getAll(pool, (err, result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao buscar itens do cardápio');
             }
-            res.render('cardapio-list.ejs', { cardapio: result });
+            res.render('cardapio-list', { cardapio: result});
         });
     },
 
     // Criar um novo item no cardápio
     createCardapio: (req, res) => {
-        const dbConn = dbConnection();
-        cardapioModel.create(dbConn, req.body, (err) => {
+        cardapioModel.create(pool, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao criar item no cardápio');
@@ -29,9 +27,7 @@ module.exports = {
 
     // Atualizar um item no cardápio
     updateCardapio: (req, res) => {
-        const dbConn = dbConnection();
-        const { id } = req.params;
-        cardapioModel.update(dbConn, id, req.body, (err) => {
+        cardapioModel.update(pool, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao atualizar item do cardápio');
@@ -42,9 +38,8 @@ module.exports = {
 
     // Remover um item do cardápio
     removeCardapio: (req, res) => {
-        const dbConn = dbConnection();
         const { id } = req.params;
-        cardapioModel.delete(dbConn, id, (err) => {
+        cardapioModel.delete(pool, id, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao excluir item do cardápio');

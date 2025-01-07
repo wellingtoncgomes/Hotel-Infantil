@@ -1,21 +1,26 @@
 const orientadoresModel = require('../models/modelOrientadores');
-const dbConnection = require('../../config/dbConnection');
+const pool = require('../../config/dbConnection'); // Certifique-se de que o arquivo exporte o pool corretamente
+
 
 module.exports = {
+    // Lista todos os orientadores
     listOrientadores: (req, res) => {
-        const dbConn = dbConnection();
-        orientadoresModel.getAll(dbConn, (err, result) => {
+        orientadoresModel.getAll(pool, (err, result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao buscar orientadores');
             }
-            res.render('orientadores-list.ejs', { orientadores: result });
+            if (result.rows.length === 0) {
+                return res.status(404).send('Nenhum orientador encontrado');
+            }
+            res.render('orientadores-list.ejs', { orientadores: result.rows }); // Renderiza a página com os dados
         });
     },
 
+
+    // Cria um novo orientador
     createOrientador: (req, res) => {
-        const dbConn = dbConnection();
-        orientadoresModel.create(dbConn, req.body, (err) => {
+        orientadoresModel.create(pool, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao criar orientador');
@@ -24,10 +29,11 @@ module.exports = {
         });
     },
 
+
+    // Atualiza um orientador existente
     editOrientador: (req, res) => {
-        const dbConn = dbConnection();
-        const { id } = req.params;
-        orientadoresModel.update(dbConn, id, req.body, (err) => {
+        console.log(req.body)
+        orientadoresModel.update(pool,req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao atualizar orientador');
@@ -36,10 +42,11 @@ module.exports = {
         });
     },
 
+
+    // Remove um orientador
     removeOrientador: (req, res) => {
-        const dbConn = dbConnection();
-        const { id } = req.params;
-        orientadoresModel.delete(dbConn, id, (err) => {
+        const { id_orientador } = req.params; // Certifique-se de usar o mesmo nome da variável
+        orientadoresModel.delete(pool, id_orientador, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao excluir orientador');
@@ -48,3 +55,6 @@ module.exports = {
         });
     }
 };
+
+
+

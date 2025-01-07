@@ -1,22 +1,27 @@
 const criancasModel = require('../models/modelCriancas');
-const dbConnection = require('../../config/dbConnection');
+const pool = require('../../config/dbConnection');
 
 module.exports = {
+    // Lista todas as crianças
     listCriancas: (req, res) => {
-        const dbConn = dbConnection();
-        criancasModel.getAll(dbConn, (err, result) => {
+        criancasModel.getAll(pool, (err, result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao buscar crianças');
             }
-            res.render('criancas-list.ejs', { criancas: result });
+            if (result.length === 0) {
+                return res.status(404).send('Nenhuma criança encontrada');
+            }
+
+
+            res.render('criancas-list.ejs', { criancas: result }); // Renderiza o template com os dados
         });
     },
 
+
+    // Cria uma nova criança
     createCrianca: (req, res) => {
-        const dbConn = dbConnection();
-        console.log("aqui adciona crianca",req.body)
-        criancasModel.create(dbConn, req.body, (err) => {
+        criancasModel.create(pool, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao adicionar criança');
@@ -25,10 +30,11 @@ module.exports = {
         });
     },
 
+
+    // Atualiza os dados de uma criança
     editCrianca: (req, res) => {
-        const dbConn = dbConnection();
-        const { id } = req.params;
-        criancasModel.update(dbConn, id, req.body, (err) => {
+        console.log("body :",req.body)
+        criancasModel.update(pool, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao atualizar criança');
@@ -37,10 +43,11 @@ module.exports = {
         });
     },
 
+
+    // Remove uma criança
     removeCrianca: (req, res) => {
-        const dbConn = dbConnection();
         const { id } = req.params;
-        criancasModel.delete(dbConn, id, (err) => {
+        criancasModel.delete(pool, id, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao excluir criança');
@@ -48,9 +55,6 @@ module.exports = {
             res.redirect('/criancas');
         });
     }
-
-
-
-    
 };
+
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/estilo.css" />
+    <title>Cadastro de Usuários</title>
+  </head>
+  <body>
+    <!-- Container para o formulário -->
+    <div style="display: flex; justify-content: center; gap: 20px; padding: 20px;">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <p style="color: red;"><%= error %></p>
+      <% } %>
+     
+      <!-- Formulário de cadastro de usuários -->
+      <div style="max-width: 600px; flex: 1;">
+        <h1>Cadastrar Novo Usuário</h1>
+        <form action="/usuarios" method="POST" id="cadastro-form" style="margin-bottom: 30px;">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required />
+          </div>
+
+          <button type="submit">Cadastrar</button>
+        </form>
+
+        <button
+          style="
+            background-color: blue;
+            color: white;
+            text-align: center;
+            width: 180px;
+            height: 40px;
+          "
+          onclick="window.location.href='https://localhost:443'"
+        >
+          Voltar
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

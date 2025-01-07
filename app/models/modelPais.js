@@ -1,41 +1,39 @@
-const dbConnection = require('../../config/dbConnection');
-
 module.exports = {
-  getAll: (dbConn, callback) => {
-    dbConn.query('SELECT * FROM pais', (err, result) => {
-      if (err) return callback(err);
-      callback(null, result);
-    });
+
+    getAll: (pool, callback) => {
+      pool.query('SELECT * FROM pais', (err, result) => {
+          if (err) return callback(err);
+          callback(null, result.rows); // Usando 'rows' para acessar os dados no PostgreSQL
+      });
+  },
+   create: (pool, data, callback) => {
+      const { nome, email, cpf, telefone } = data;
+      pool.query(
+          'INSERT INTO pais (nome, email, cpf, telefone) VALUES ($1, $2, $3, $4)',
+          [nome, email, cpf, telefone],
+          (err) => {
+              if (err) return callback(err);
+              callback(null);
+          }
+      );
   },
 
-  create: (dbConn, data, callback) => {
-    const { nome, email, cpf, telefone } = data;
-    dbConn.query(
-      'INSERT INTO pais (nome, email, cpf, telefone) VALUES (?, ?, ?, ?)',
-      [nome, email, cpf, telefone],
-      (err) => {
-        if (err) return callback(err);
-        callback(null);
-      }
-    );
+  update: (pool,data, callback) => {
+      const { nome, email, cpf, telefone, id_pai} = data;
+      pool.query(
+          'UPDATE pais SET nome = $1, email = $2, cpf = $3, telefone = $4 WHERE id_pai = $5',
+          [nome, email, cpf, telefone, id_pai],
+          (err) => {
+              if (err) return callback(err);
+              callback(null);
+          }
+      );
   },
 
-  update: (dbConn, id, data, callback) => {
-    const { nome, email, cpf, telefone } = data;
-    dbConn.query(
-      'UPDATE pais SET nome = ?, email = ?, cpf = ?, telefone = ? WHERE id = ?',
-      [nome, email, cpf, telefone, id],
-      (err) => {
-        if (err) return callback(err);
-        callback(null);
-      }
-    );
-  },
-
-  delete: (dbConn, id, callback) => {
-    dbConn.query('DELETE FROM pais WHERE id = ?', [id], (err) => {
-      if (err) return callback(err);
-      callback(null);
-    });
+  delete: (pool, id, callback) => {
+      pool.query('DELETE FROM pais WHERE id_pai = $1', [id], (err) => {
+          if (err) return callback(err);
+          callback(null);
+      });
   },
 };

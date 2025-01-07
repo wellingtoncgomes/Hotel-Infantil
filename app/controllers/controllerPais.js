@@ -1,38 +1,41 @@
 const paisModel = require('../models/modelPais');
-const dbConnection = require('../../config/dbConnection');
+const pool = require('../../config/dbConnection'); 
 
 module.exports = {
-    listPais: (req, res) => { // Removido o parâmetro "app"
-        const dbConn = dbConnection();
-        paisModel.getAll(dbConn, (err, result) => {
+    // Lista todos os pais 
+    listPais: (req, res) => {
+        paisModel.getAll(pool, (err, result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao buscar dados');
             }
-            console.log(result);
-            res.render('pais-list.ejs', { pais: result }); // Certifique-se de que o template "pais-list.ejs" existe e está no diretório correto
+
+            if (result.length === 0) {
+                return res.status(404).send('Nenhum pai encontrado');
+            }
+
+            // Renderizando a visão pais-list.ejs com os dados de 'pais'
+            res.render('pais-list.ejs', { pais: result });
         });
     },
 
+    // Cria um novo pai
     createPais: (req, res) => {
-        const dbConn = dbConnection();
-        console.log("aqui",req.body)
-        paisModel.create(dbConn, req.body, (err) => {
+        paisModel.create(pool, req.body, (err) => {
             if (err) {
-                console.error(err);
-                return res.status(500).send('Erro ao criar pai');
+                console.error('Erro ao adicionar pais:', err);
+                return res.status(500).send({ 
+                    error: 'Erro ao adicionar pais:',
+                    message: err.detail || 'Erro desconhecido' 
+                });
             }
             res.redirect('/pais');
         });
     },
 
-
+    // Atualiza os dados de um pai
     editPais: (req, res) => {
-        const dbConn = dbConnection();
-        const { id } = req.params;
-        console.log("aqui", req.params);
-        console.log("aqui", req.body);
-        paisModel.update(dbConn, id, req.body, (err) => {
+        paisModel.update(pool,req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao atualizar pai');
@@ -40,26 +43,16 @@ module.exports = {
             res.redirect('/pais');
         });
     },
-    
 
-
-
+    // Remove um pai
     removePais: (req, res) => {
-        const dbConn = dbConnection();
-        const { id } = req.params; // Pega o ID da URL
-        
-        paisModel.delete(dbConn, id, (err) => {
+        const { id } = req.params;
+        paisModel.delete(pool, id, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao excluir pai');
             }
             res.status(200).send('Pai excluído com sucesso');
         });
-    }
-
-
-    
-
-
-
+    },
 };

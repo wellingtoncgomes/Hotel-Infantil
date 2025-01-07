@@ -1,23 +1,20 @@
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
-function authenticate(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Acesso não autorizado' });
+module.exports = (req, res, next) => {
+  const token = req.session.token;
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: 'Token inválido' });
-    req.user = user;
+  if (!token) {
+    return res.redirect('/login');
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.redirect('/login');
+    }
+
+    req.user = decoded;
     next();
   });
-}
-
-function authorizeAdmin(req, res, next) {
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ error: 'Acesso permitido somente para administradores' });
-  }
-  next();
-}
-
-module.exports = { authenticate, authorizeAdmin };
-
-
+};

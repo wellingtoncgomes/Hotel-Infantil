@@ -87,3 +87,54 @@ ul {
 ul li {
   margin: 5px 0;
 }
+       /* Estilo adicional para o layout */
+       .container {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .form-container, .table-container {
+        flex: 1;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    button {
+        padding: 5px 10px;
+        margin: 0 5px;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .btn-update {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background-color: #c0392b;
+    }
+
+    .btn-update:hover {
+        background-color: #2980b9;
+    }

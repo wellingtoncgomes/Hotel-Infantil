@@ -1,64 +1,73 @@
-const dbConnection = require('../../config/dbConnection');
+const pool = require('../../config/dbConnection'); // Certifique-se de que o pool está sendo exportado corretamente
+
 
 module.exports = {
     // Obter todos os pagamentos
-    getAll: (dbConn, callback) => {
+    getAll: (pool, callback) => {
         const sql = 'SELECT * FROM Pagamentos';
-        dbConn.query(sql, callback);
+        pool.query(sql, callback);
     },
+
 
     // Criar um novo pagamento
-    create: (dbConn, data, callback) => {
+    create: (pool, data, callback) => {
         const sql = `
             INSERT INTO Pagamentos (id_reserva, valor, data_pagamento, metodo_pagamento)
-            VALUES (?, ?, ?, ?)
+            VALUES ($1, $2, $3, $4)
         `;
         const values = [data.id_reserva, data.valor, data.data_pagamento, data.metodo_pagamento];
-        dbConn.query(sql, values, callback);
+        pool.query(sql, values, callback);
     },
 
+
     // Verificar se há pagamento pendente para um pai
-    verificarPagamentoPendente: (dbConn, id_pai, callback) => {
+    verificarPagamentoPendente: (pool, id_pai, callback) => {
         const sql = `
-            SELECT 
-                p.id_pai, 
+            SELECT
+                p.id_pai,
                 COUNT(pg.id_pagamento) AS pagamentos_pendentes
-            FROM 
+            FROM
                 Pais p
-            INNER JOIN 
+            INNER JOIN
                 Reservas r ON p.id_pai = r.id_pai
-            INNER JOIN 
+            INNER JOIN
                 Pagamentos pg ON r.id_reserva = pg.id_reserva
-            WHERE 
-                p.id_pai = ? AND pg.status_pagamento = 'Pendente'
-            GROUP BY 
+            WHERE
+                p.id_pai = $1 AND pg.status_pagamento = 'Pendente'
+            GROUP BY
                 p.id_pai
         `;
-        dbConn.query(sql, [id_pai], (err, result) => {
+        pool.query(sql, [id_pai], (err, result) => {
             if (err) {
                 return callback(err);
             }
             // Verifica se existem pagamentos pendentes
-            const temPendentes = result.length > 0 && result[0].pagamentos_pendentes > 0;
+            const temPendentes = result.rows.length > 0 && result.rows[0].pagamentos_pendentes > 0;
             callback(null, temPendentes);
         });
     },
 
+
     // Atualizar o status do pagamento
-    updateStatus: (dbConn, id_pagamento, status_pagamento, callback) => {
-        const sql = 'UPDATE Pagamentos SET status_pagamento = ? WHERE id_pagamento = ?';
-        dbConn.query(sql, [status_pagamento, id_pagamento], callback);
+    updateStatus: (pool, id_pagamento, status_pagamento, callback) => {
+        const sql = 'UPDATE Pagamentos SET status_pagamento = $1 WHERE id_pagamento = $2';
+        pool.query(sql, [status_pagamento, id_pagamento], callback);
     },
+
 
     // Obter pagamento por ID
-    getById: (dbConn, id_pagamento, callback) => {
-        const sql = 'SELECT * FROM Pagamentos WHERE id_pagamento = ?';
-        dbConn.query(sql, [id_pagamento], callback);
+    getById: (pool, id_pagamento, callback) => {
+        const sql = 'SELECT * FROM Pagamentos WHERE id_pagamento = $1';
+        pool.query(sql, [id_pagamento], callback);
     },
 
+
     // Deletar pagamento
-    delete: (dbConn, id_pagamento, callback) => {
-        const sql = 'DELETE FROM Pagamentos WHERE id_pagamento = ?';
-        dbConn.query(sql, [id_pagamento], callback);
+    delete: (pool, id_pagamento, callback) => {
+        const sql = 'DELETE FROM Pagamentos WHERE id_pagamento = $1';
+        pool.query(sql, [id_pagamento], callback);
     }
 };
+
+
+

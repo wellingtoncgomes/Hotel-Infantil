@@ -1,54 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap 5 CSS-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <!-- Bootstrap Icons CSS-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="./images/logo.jpg">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  
   <link rel="stylesheet" href="./styles/style.css">
-
   <link rel="stylesheet" href="./styles/acordeon.css">
-
-
-
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-    href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-    rel="stylesheet"
-    />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
   <title>Menu Inicial</title>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const acordeons = document.querySelectorAll('.acordeon .trigger');
+  
+      acordeons.forEach(trigger => {
+        trigger.addEventListener('click', function () {
+          const acordeon = this.closest('.acordeon');
+          acordeon.classList.toggle('open');
+        });
+      });
+    });
+  </script>
 </head>
-
-
-<body onload="verificaLogado();obtemDados('Profile');carregaComentarios('comentarios')">
+<body>
   <nav class="navbar navbar-expand-lg navbar-light fundo-laranja-claro">
     <div class="container-fluid">
-      <i class="bi bi-tools"></i>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link active" href="/"><i class="bi bi-house"></i> Início</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/pais"><i class="bi bi-person-vcard"></i> Clientes</a>
+            <a class="nav-link" href="/pais"><i class="bi bi-file-person"></i> Clientes</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/reservas"><i class="bi bi-calendar3"></i> Reservas</a>
@@ -57,91 +53,143 @@
             <a class="nav-link" href="/pagamentos"><i class="bi bi-journal-check"></i> Pagamentos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/orientadores"><i class="bi bi-printer"></i> Orientadores</a>
+            <a class="nav-link" href="/orientadores"><i class="bi bi-mortarboard-fill"></i> Orientadores</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/criancas"><i class="bi bi-emoji-smile"></i>Crianças</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/atividades"><i class="bi bi-journal-check"></i>Atividades</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/cadastro"><i class="bi bi-people-fill"></i>Usuarios</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/fale-conosco"><i class="bi bi-megaphone"></i> Fale Conosco</a>
           </li>
         </ul>
       </div>
-      
-
-
 
       <div class="text-right">
         <ul class="navbar-nav ms-auto flex-nowrap">
-         
-          <div id="imagemUsuario"></div>
-  <li class="nav-item">
-           
+          <li class="nav-item">
+            <a class="nav-link" href="/login"><i class="bi bi-lock"></i> Área Restrita</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <button class="btn fundo-laranja-escuro" type="button" disabled id="carregandoDados">
-    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    Carregando os dados...
-  </button>
+
   <main id="conteudo" class="main">
     <div class="w3-content w3-margin-top" style="max-width:1400px;">
-
-      <!-- The Grid -->
       <div class="w3-row-padding">
-  
         <!-- Left Column -->
         <div class="w3-third">
-  
           <div class="w3-white w3-text-black w3-card-4">
-            
             <div class="w3-container">
-              <h2 id="profile.name"></h2>
+              <h2 id="profile.name">Hotel Pedacinho do Céu</h2>
             </div>
             <div class="w3-container">
-              <img class="photo" src="./images/logo.jpg" id="profile.photo">
-          
+              <img class="photo" src="./images/logo.jpg" id="profile.photo" alt="Logo do hotel">
               <hr>
             </div>
           </div><br>
-          <div class="">
-         
-
-        <section class="acordeon">
+          <section class="acordeon">
             <button class="trigger" type="button">
-                <h2>Horários de<br>Atendimento </h2>
+              <h2>Horários de Atendimento</h2>
             </button>
-
             <div class="content">
-                <ul class="openingHours" id="profile.openingHours">
-                       
-                </ul>
+              <ul class="openingHours">
+                <li><strong>Segunda a Sexta:</strong> 08:00 - 18:00</li>
+                <li><strong>Sábado:</strong> 08:00 - 12:00</li>
+                <li><strong>Domingo:</strong> Fechado</li>
+                <li><strong>Feriados:</strong> Consulte disponibilidade</li>
+              </ul>
             </div>
-        </section>
-         </div>
+          </section>
         </div>
-  
+
+        <!-- Right Column -->
         <div class="w3-twothird">
-    
-          
+          <div class="w3-card-4" style="width:100%">
+              <div class="w3-container">
+                <h4>Jogos para as Crianças</h4>
+              <ul>
+                <a href="./jogos/pong.html" target="_blank"><img src="./images/pong.webp" alt="Jogar" class="game-img" width="40%" height="40%"></a>
+                <a href="./jogos/cartas.html" target="_blank"><img src="./images/cartas.png" alt="Jogar" class="game-img" width="40%" height="40%"></a>
+                <a href="./jogos/snake.html" target="_blank"><img src="./images/snake.jpeg" alt="Jogar" class="game-img" width="40%" height="40%"></a>
+                <a href="./jogos/tetris.html" target="_blank"><img src="./images/tetris.png" alt="Jogar" class="game-img" width="40%" height="40%"></a>
+              </ul>
+            </div>
+          </div>
 
-          <div class="w3-container w3-card w3-white w3-margin-bottom">
-           
-          
-  
+          <!-- Orientadores -->
+          <div class="w3-row-padding w3-margin-top">
+            <div class="w3-card-4" style="width:100%">
+              <div class="w3-container">
+                <h4>Equipe de Orientadores</h4>
+                <div class="w3-row-padding">
+                  <% orientadores.forEach(orientador => { %>
+                    <div class="w3-col l4 s12">
+                      <div class="w3-card-4">
+                        <img src="<%= orientador.imagem %>" alt="<%= orientador.nome %>" style="width:100%">
+                        <div class="w3-container">
+                          <h5><%= orientador.nome %></h5>
+                          <p><%= orientador.especialidade %></p>
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
+                  </div>
+                </div>
+            </div>
+          </div>
 
-        <button class="trigger" type="button"></button>
-          <li>
-            <a href="./jogos/pong.html" target="_blank"><img src="./images/pong.webp" alt="Jogar" class="game-img" width="40%" height="40%"></a>
-            <a href="./jogos/cartas.html" target="_blank"><img src="./images/cartas.png" alt="Jogar" class="game-img" width="40%" height="40%"></a>
-            <a href="./jogos/snake.html" target="_blank"><img src="./images/snake.jpeg" alt="Jogar" class="game-img" width="40%" height="40%"></a>
-            <a href="./jogos/tetris.html" target="_blank"><img src="./images/tetris.png" alt="Jogar" class="game-img" width="40%" height="40%"></a>
-         </li>
-        </button>
-         
+          <!-- Cardápios -->
+          <div class="w3-row-padding w3-margin-top">
+            <div class="w3-card-4" style="width:100%">
+              <div class="w3-container">
+                <h4>Cardápios da Semana</h4>
+                <div class="w3-row-padding">
+                  <% cardapios.forEach(cardapio => { %>
+                    <div class="w3-col l4 s12">
+                      <div class="w3-card-4">
+                        <img src="<%= cardapio.imagem %>" alt="<%= cardapio.nome %>" style="width:100%">
+                        <div class="w3-container">
+                          <h5><%= cardapio.nome %></h5>
+                          <p><%= cardapio.descricao %></p>
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <!-- Atividades -->
+          <div class="w3-row-padding w3-margin-top">
+            <div class="w3-card-4" style="width:100%">
+              <div class="w3-container">
+                <h4>Atividades para as Crianças</h4>
+                <div class="w3-row-padding">
+                  <% atividades.forEach(atividade => { %>
+                    <div class="w3-col l4 s12">
+                      <div class="w3-card-4">
+                        <img src="<%= atividade.imagem %>" alt="<%= atividade.nome %>" style="width:100%">
+                        <div class="w3-container">
+                          <h5><%= atividade.nome %></h5>
+                          <p><%= atividade.descricao %></p>
+                        </div>
+                      </div>
+                    </div>
+                    <% }); %>
+                  </div>
+                </div>
+              </div>
+          </div>
         </div>
-
       </div>
-  
     </div>
   </main>
 
@@ -149,27 +197,18 @@
     <p> Redes Sociais</p>
     <a href="https://www.facebook.com/hotelpedacinhodoceu.com.br/?locale=pt_BR"><i class="fa fa-facebook w3-xxlarge w3-hover-opacity"></i></a>
     <a href="https://www.instagram.com/explore/locations/475437502/hotel-infantil-pedacinho-do-ceu/" target="_blank"><i class="fa fa-instagram w3-xxlarge w3-hover-opacity"></i></a>
-    
     <a href="https://www.youtube.com/watch?v=NwyIZpgadpM" target="_blank"><i class="fa fa-youtube w3-xxlarge w3-hover-opacity"></i></a>
-
-    
     <a href="https://wa.me/5519993066649?text=Olá%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20hotel%21" target="_blank">
-      <i class="fa fa-whatsapp" style="font-size:36px"></i></a>
-  
-      <a href="https://www.tiktok.com/@hotelpedacinhodoceu" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/TikTok_logo_2021.svg" alt="TikTok" width="36" height="36">
+      <i class="fa fa-whatsapp" style="font-size:36px"></i>
+    </a>
+    <a href="https://www.tiktok.com/@hotelpedacinhodoceu" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/TikTok_logo_2021.svg" alt="TikTok" width="36" height="36">
     </a><br><br>
-    
     <p> &copy; - Todos os direitos reservados</p>
   </footer>
 
   <!-- Carregamento dos scripts do projeto-->
-
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="./js/util/alert.js"></script>
 </body>
-
-
-
-
 </html>

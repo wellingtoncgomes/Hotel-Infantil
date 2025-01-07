@@ -3,79 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/reserva.css">
-
+    <link rel="stylesheet" href="./styles/estilo.css">
     <title>Lista de Reservas</title>
-
-   
 
 </head>
 <body>
-    <h1>Lista de Reservas</h1>
+  <% if (typeof error !== 'undefined' && error) { %>
+    <p style="color: red;"><%= error %></p>
+  <% } %>
+    <div class="container">
+        <!-- Formulário para Criar Nova Reserva -->
+        <div class="form-container">
+            <h1>Criar Nova Reserva</h1>
+            <form action="/reservas" method="POST">
+                <div class="form-group">
+                    <label for="nome_crianca">Nome da Criança:</label>
+                    <select name="id_crianca" required>
+                        <option value="">Selecione uma criança</option>
+                        <% criancas.forEach(crianca => { %>
+                            <option value="<%= crianca.id %>"><%= crianca.nome %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
-    <!-- Adicionando a div para criar uma nova reserva -->
-    <div>
-        <h2>Criar Nova Reserva</h2>
-        <form action="/reservas" method="POST">
-            <label for="nome_crianca">Nome da Criança:</label>
-            <select name="id_crianca" required>
-              <option value="">Selecione uma criança</option>
-              <% criancas.forEach(crianca => { %>
-                <option value="<%= crianca.id %>"><%= crianca.nome %></option>
-              <% }); %>
-            </select><br><br>
-             
-          
+                <div class="form-group">
+                    <label for="nome_pai">Nome do Pai:</label>
+                    <select name="id_pai" required>
+                        <option value="">Selecione um pai</option>
+                        <% pais.forEach(pai => { %>
+                            <option value="<%= pai.id_pai %>"><%= pai.nome %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
+                <div class="form-group">
+                    <label for="id_atividade">Atividade:</label>
+                    <select name="id_atividade" required>
+                        <option value="">Selecione uma atividade</option>
+                        <% atividades.forEach(atividade => { %>
+                            <option value="<%= atividade.id_atividade %>"><%= atividade.nome %></option>
+                        <% }); %>
+                    </select>
+                </div>
 
+                <div class="form-group">
+                    <label for="data_reserva">Data da Reserva:</label>
+                    <input type="date" name="data_reserva" required>
+                </div>
 
-            <label for="nome_pai">Nome do Pai:</label>
-            <select name="id_pai" required>
-              <option value="">Selecione um pai</option>
-              <% pais.forEach(pai => { %>
-                <option value="<%= pai.id %>"><%= pai.nome %></option>
-              <% }); %>
-            </select><br><br>
-            
-          
+                <button type="submit">Cadastrar Reserva</button>
+            </form>
+            <button
+                    style="
+                        background-color: blue;
+                        color: white;
+                        text-align: center;
+                        width: 180px;
+                        height: 40px;
+                    "
+                    onclick="window.location.href='https://localhost:443'"
+                >
+                    Voltar
+                </button>
+                <br /><br />
+        </div>
 
+        <!-- Exibição das Reservas Cadastradas -->
+        <div class="table-container">
+            <h1>Reservas Cadastradas</h1>
+  <table>
+      <thead>
+          <tr>
+              <th>Status</th>
+              <th>Criança</th>
+              <th>Pai</th>
+              <th>Atividade</th>
+              <th>Data</th>
+              <th>Ações</th>
+          </tr>
+      </thead>
+      <tbody>
+          <% reservas.forEach(reserva => { %>
+              <tr>
+                  <td><%= reserva.status_reserva %></td>
+                  <td><%= reserva.nome_crianca %></td>
+                  <td><%= reserva.nome_pai %></td>
+                  <td><%= reserva.nome_atividade %></td>
+                  <td><%= reserva.data_reserva %></td>
+                  <td>
+                      <!-- Botão para Finalizar a Reserva -->
+                      <button
+                          onclick="if(confirm('Tem certeza que deseja finalizar esta reserva?')) { window.location.href = '/reservas/finalizar/<%= reserva.id_reserva %>'; }">
+                          Finalizar
+                      </button>
 
-            <label for="id_atividade">Atividade:</label>
-            <select name="id_atividade" required>
-              <option value="">Selecione uma atividade</option>
-              <% atividades.forEach(atividade => { %>
-                <option value="<%= atividade.id %>"><%= atividade.nome %></option>
-              <% }); %>
-            </select><br><br>
-            
-          
-            <label for="data_reserva">Data da Reserva:</label>
-            <input type="date" name="data_reserva" required><br>
-          
-            <p><button type="submit">Cadastrar Reserva</button></p>
-          </form>
-          
-    </div>
-
-    <!-- Lista de Reservas (Aqui você provavelmente já tem a exibição das reservas cadastradas) -->
-    <h3>Reservas Cadastradas</h3>
-    <ul>
-        <% reservas.forEach(reserva => { %>
-            <li>
-                <span>Reserva:</span> <%= reserva.status_reserva %>, 
-                <span>Criança:</span> <%= reserva.nome_crianca %>, 
-                <span>Pai:</span> <%= reserva.nome_pai %>, 
-                <span>Atividade:</span> <%= reserva.nome %>, 
-                <span>Data:</span> <%= reserva.data_reserva %>
-            </li>
-        <% }); %>
-    </ul>
-    
-
-    <!-- Link para voltar ou adicionar mais funcionalidades -->
-    <a href="/">Voltar para a página inicial</a>
-
-
+                      <!-- Botão para Excluir a Reserva -->
+                      <button
+                          onclick="if(confirm('Tem certeza que deseja excluir esta reserva?')) { window.location.href = '/reservas/delete/<%= reserva.id_reserva %>'; }">
+                          Excluir
+                      </button>
+                  </td>
+              </tr>
+          <% }); %>
+      </tbody>
+  </table>
+</div>
 
 </body>
 </html>

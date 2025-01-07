@@ -1,21 +1,25 @@
 const atividadesModel = require('../models/modelAtividades');
-const dbConnection = require('../../config/dbConnection');
+const pool = require('../../config/dbConnection'); // Certifique-se de que o arquivo 'dbConnection' exporte o pool corretamente
+
 
 module.exports = {
+    // Lista todas as atividades
     listAtividades: (req, res) => {
-        const dbConn = dbConnection();
-        atividadesModel.getAll(dbConn, (err, result) => {
+        atividadesModel.getAll(pool, (err, result) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao buscar atividades');
             }
-            res.render('atividades-list.ejs', { atividades: result });
+            if (result.length === 0) {
+                return res.status(404).send('Nenhuma atividade encontrada');
+            }
+            res.render('atividades-list.ejs', { atividades: result }); // Use 'result.rows' para obter os dados
         });
     },
 
+    // Cria uma nova atividade
     createAtividade: (req, res) => {
-        const dbConn = dbConnection();
-        atividadesModel.create(dbConn, req.body, (err) => {
+        atividadesModel.create(pool, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao criar atividade');
@@ -24,10 +28,10 @@ module.exports = {
         });
     },
 
+
+    // Atualiza uma atividade existente
     editAtividade: (req, res) => {
-        const dbConn = dbConnection();
-        const { id_atividade } = req.params;  // Ajuste aqui para usar 'id_atividade'
-        atividadesModel.update(dbConn, id_atividade, req.body, (err) => {
+        atividadesModel.update(pool, req.body, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao atualizar atividade');
@@ -36,10 +40,11 @@ module.exports = {
         });
     },
 
+
+    // Remove uma atividade
     removeAtividade: (req, res) => {
-        const dbConn = dbConnection();
-        const { id_atividade } = req.params;  // Ajuste aqui para usar 'id_atividade'
-        atividadesModel.delete(dbConn, id_atividade, (err) => {
+        const { id_atividade } = req.params; // Usando 'id_atividade' como identificador
+        atividadesModel.delete(pool, id_atividade, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Erro ao excluir atividade');
@@ -48,3 +53,6 @@ module.exports = {
         });
     }
 };
+
+
+
