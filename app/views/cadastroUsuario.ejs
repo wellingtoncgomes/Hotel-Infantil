@@ -8,15 +8,22 @@
   </head>
   <body>
     <!-- Container para o formulário -->
-    <div style="display: flex; justify-content: center; gap: 20px; padding: 20px;">
+    <div
+      style="display: flex; justify-content: center; gap: 20px; padding: 20px"
+    >
       <% if (typeof error !== 'undefined' && error) { %>
-        <p style="color: red;"><%= error %></p>
+      <p style="color: red"><%= error %></p>
       <% } %>
-     
+
       <!-- Formulário de cadastro de usuários -->
-      <div style="max-width: 600px; flex: 1;">
+      <div style="max-width: 600px; flex: 1">
         <h1>Cadastrar Novo Usuário</h1>
-        <form action="/usuarios" method="POST" id="cadastro-form" style="margin-bottom: 30px;">
+        <form
+          action="/usuarios"
+          method="POST"
+          id="cadastro-form"
+          style="margin-bottom: 30px"
+        >
           <div class="form-group">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" required />

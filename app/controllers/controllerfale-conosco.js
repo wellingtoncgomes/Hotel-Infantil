@@ -11,16 +11,15 @@ module.exports = {
 
         // Chama o model para salvar a mensagem
         modelfaleconosco.saveMessage(pool, nome, email, mensagem, (err, result) => {
-            
-            if (err) {
-                console.error('Erro ao salvar mensagem:', err);
-                return res.status(500).send('Erro ao enviar mensagem'); // Retorna erro ao cliente
-            }
+          if (err) {
+            console.error("Erro ao salvar mensagem:", err);
+            return res.status(500).send("Erro ao enviar mensagem"); // Retorna erro ao cliente
+          }
 
-            console.log(`Mensagem de ${nome} salva com sucesso!`);
-            
-            // Renderiza a página de confirmação com o nome do usuário
-            res.render('confirmacao', { nome });
+          console.log(`Mensagem de ${nome} salva com sucesso!`);
+
+          // Renderiza a página de confirmação com o nome do usuário
+          res.render("confirmacao", { nome });
         });
     }
   };

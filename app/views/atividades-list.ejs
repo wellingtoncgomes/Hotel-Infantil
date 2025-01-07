@@ -1,159 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/estilo.css" />
     <title>Lista de Atividades</title>
     <script>
-        // Função para editar uma atividade
-        function editAtividade(button) {
-          // Obtém os dados da atividade do atributo data-atividade
-          var atividade = JSON.parse(button.getAttribute('data-atividade'));
-      
-          // Esconde o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "none";
-      
-          // Exibe o formulário de edição
-          document.getElementById("edit-form").style.display = "block";
-      
-          // Preenche os campos do formulário de edição com os dados da atividade
-          document.getElementById("edit-id_atividade").value = atividade.id_atividade;
-          document.getElementById("edit-nome").value = atividade.nome;
-          document.getElementById("edit-descricao").value = atividade.descricao;
-          document.getElementById("edit-faixa_etaria").value = atividade.faixa_etaria;
-          document.getElementById("edit-imagem_url").value = atividade.imagem;
-      
-          // Atualiza a ação do formulário com o id da atividade
-          document.getElementById("edit-form").action = "/atividades/edit/" + atividade.id_atividade;
-        }
-      
-        // Função para cancelar a edição e mostrar o formulário de cadastro novamente
-        function cancelEdit() {
-          // Exibe o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "block";
-      
-          // Esconde o formulário de edição
-          document.getElementById("edit-form").style.display = "none";
-        }
-      </script>
-      
-</head>
-<body>
+      // Função para editar uma atividade
+      function editAtividade(button) {
+        // Obtém os dados da atividade do atributo data-atividade
+        var atividade = JSON.parse(button.getAttribute("data-atividade"));
+
+        // Esconde o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "none";
+
+        // Exibe o formulário de edição
+        document.getElementById("edit-form").style.display = "block";
+
+        // Preenche os campos do formulário de edição com os dados da atividade
+        document.getElementById("edit-id_atividade").value =
+          atividade.id_atividade;
+        document.getElementById("edit-nome").value = atividade.nome;
+        document.getElementById("edit-descricao").value = atividade.descricao;
+        document.getElementById("edit-faixa_etaria").value =
+          atividade.faixa_etaria;
+        document.getElementById("edit-imagem_url").value = atividade.imagem;
+
+        // Atualiza a ação do formulário com o id da atividade
+        document.getElementById("edit-form").action =
+          "/atividades/edit/" + atividade.id_atividade;
+      }
+
+      // Função para cancelar a edição e mostrar o formulário de cadastro novamente
+      function cancelEdit() {
+        // Exibe o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "block";
+
+        // Esconde o formulário de edição
+        document.getElementById("edit-form").style.display = "none";
+      }
+    </script>
+  </head>
+  <body>
     <!-- Container para os formulários e a tabela -->
     <div style="display: flex; justify-content: space-between; gap: 20px">
-        <!-- Formulários -->
-        <div style="max-width: 600px; flex: 1">
-            <!-- Formulário de cadastro de novas atividades -->
-            <div id="cadastro-form" style="display: block; margin-bottom: 30px">
-                <h1>Cadastrar Nova Atividade</h1>
-                <form action="/atividades" method="POST">
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="descricao">Descrição</label>
-                        <input type="text" id="descricao" name="descricao" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="faixa_etaria">Faixa Etária</label>
-                        <input type="text" id="faixa_etaria" name="faixa_etaria" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="imagem_url">URL da Imagem</label>
-                        <input type="text" id="imagem_url" name="imagem_url" required />
-                    </div>
-
-                    <button type="submit">Cadastrar</button>
-                </form>
-                <button
-                    style="
-                        background-color: blue;
-                        color: white;
-                        text-align: center;
-                        width: 180px;
-                        height: 40px;
-                    "
-                    onclick="window.location.href='https://localhost:443'"
-                >
-                    Voltar
-                </button>
-                <br /><br />
+      <!-- Formulários -->
+      <div style="max-width: 600px; flex: 1">
+        <!-- Formulário de cadastro de novas atividades -->
+        <div id="cadastro-form" style="display: block; margin-bottom: 30px">
+          <h1>Cadastrar Nova Atividade</h1>
+          <form action="/atividades" method="POST">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" required />
             </div>
 
-            <!-- Formulário de edição, inicialmente oculto -->
-            <div id="edit-form" style="display: none; margin-bottom: 30px">
-                <h1>Editar Atividade</h1>
-                <form action="/atividades/edit" method="POST">
-                    <input type="hidden" id="edit-id_atividade" name="id_atividade" />
-
-                    <div class="form-group">
-                        <label for="edit-nome">Nome</label>
-                        <input type="text" id="edit-nome" name="nome" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-descricao">Descrição</label>
-                        <input type="text" id="edit-descricao" name="descricao" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-faixa_etaria">Faixa Etária</label>
-                        <input type="text" id="edit-faixa_etaria" name="faixa_etaria" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-imagem_url">URL da Imagem</label>
-                        <input type="text" id="edit-imagem_url" name="imagem_url" required />
-                    </div>
-
-                    <button type="submit">Atualizar</button>
-                    <button type="button" onclick="cancelEdit()">Cancelar</button>
-                </form>
+            <div class="form-group">
+              <label for="descricao">Descrição</label>
+              <input type="text" id="descricao" name="descricao" required />
             </div>
+
+            <div class="form-group">
+              <label for="faixa_etaria">Faixa Etária</label>
+              <input
+                type="text"
+                id="faixa_etaria"
+                name="faixa_etaria"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="imagem_url">URL da Imagem</label>
+              <input type="text" id="imagem_url" name="imagem_url" required />
+            </div>
+
+            <button type="submit">Cadastrar</button>
+          </form>
+          <button
+            style="
+              background-color: blue;
+              color: white;
+              text-align: center;
+              width: 180px;
+              height: 40px;
+            "
+            onclick="window.location.href='https://localhost:443'"
+          >
+            Voltar
+          </button>
+          <br /><br />
         </div>
 
-        <!-- Tabela de Atividades -->
-        <div style="flex: 1; max-width: 55%">
-            <h1>Lista de Atividades</h1>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Faixa Etária</th>
-                    <th>Imagem</th>
-                    <th>Ações</th>
-                </tr>
-                <% atividades.forEach(atividade => { %>
-                <tr>
-                    <td><%= atividade.id_atividade %></td>
-                    <td><%= atividade.nome %></td>
-                    <td><%= atividade.descricao %></td>
-                    <td><%= atividade.faixa_etaria %></td>
-                    <td>
-                        <img src="<%= atividade.imagem %>" alt="Imagem da Atividade" style="max-width: 100px; max-height: 100px;" />
-                    </td>
-                    <td>
-                        <!-- Botão de excluir -->
-                        <button
-                            onclick="if(confirm('Tem certeza que deseja excluir?')) { window.location.href = '/atividades/delete/<%= atividade.id_atividade %>'; }"
-                        >
-                            Excluir
-                        </button>
+        <!-- Formulário de edição, inicialmente oculto -->
+        <div id="edit-form" style="display: none; margin-bottom: 30px">
+          <h1>Editar Atividade</h1>
+          <form action="/atividades/edit" method="POST">
+            <input type="hidden" id="edit-id_atividade" name="id_atividade" />
 
-                        <!-- Botão de editar -->
-                        <button data-atividade='<%= JSON.stringify(atividade) %>' onclick='editAtividade(this)'>Editar</button>
-                    </td>
-                </tr>
-                <% }); %>
-            </table>
+            <div class="form-group">
+              <label for="edit-nome">Nome</label>
+              <input type="text" id="edit-nome" name="nome" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-descricao">Descrição</label>
+              <input
+                type="text"
+                id="edit-descricao"
+                name="descricao"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-faixa_etaria">Faixa Etária</label>
+              <input
+                type="text"
+                id="edit-faixa_etaria"
+                name="faixa_etaria"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-imagem_url">URL da Imagem</label>
+              <input
+                type="text"
+                id="edit-imagem_url"
+                name="imagem_url"
+                required
+              />
+            </div>
+
+            <button type="submit">Atualizar</button>
+            <button type="button" onclick="cancelEdit()">Cancelar</button>
+          </form>
         </div>
+      </div>
+
+      <!-- Tabela de Atividades -->
+      <div style="flex: 1; max-width: 55%">
+        <h1>Lista de Atividades</h1>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Faixa Etária</th>
+            <th>Imagem</th>
+            <th>Ações</th>
+          </tr>
+          <% atividades.forEach(atividade => { %>
+          <tr>
+            <td><%= atividade.id_atividade %></td>
+            <td><%= atividade.nome %></td>
+            <td><%= atividade.descricao %></td>
+            <td><%= atividade.faixa_etaria %></td>
+            <td>
+              <img
+                src="<%= atividade.imagem %>"
+                alt="Imagem da Atividade"
+                style="max-width: 100px; max-height: 100px"
+              />
+            </td>
+            <td>
+              <!-- Botão de excluir -->
+              <button
+                onclick="if(confirm('Tem certeza que deseja excluir?')) { window.location.href = '/atividades/delete/<%= atividade.id_atividade %>'; }"
+              >
+                Excluir
+              </button>
+
+              <!-- Botão de editar -->
+              <button
+                data-atividade="<%= JSON.stringify(atividade) %>"
+                onclick="editAtividade(this)"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+          <% }); %>
+        </table>
+      </div>
     </div>
     <script src="../../public/js/util/atividade.js"></script>
-</body>
+  </body>
 </html>

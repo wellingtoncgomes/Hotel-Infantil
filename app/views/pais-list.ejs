@@ -1,149 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/estilo.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/estilo.css" />
     <title>Lista de Pais</title>
     <script>
       // Função para editar um pai
       function editPai(button) {
-        var pai = JSON.parse(button.getAttribute('data-pai'));
-        
+        var pai = JSON.parse(button.getAttribute("data-pai"));
+
         // Exibe o objeto pai no console para depuração
         console.log(pai);
 
         // Esconde o formulário de cadastro
-        document.getElementById('cadastro-form').style.display = 'none';
+        document.getElementById("cadastro-form").style.display = "none";
 
         // Exibe o formulário de edição
-        document.getElementById('edit-form').style.display = 'block';
+        document.getElementById("edit-form").style.display = "block";
 
         // Preenche os campos do formulário de edição com os dados do pai
-        document.getElementById('edit-id_pai').value = pai.id_pai;
-        document.getElementById('edit-nome').value = pai.nome;
-        document.getElementById('edit-cpf').value = pai.cpf;
-        document.getElementById('edit-email').value = pai.email;
-        document.getElementById('edit-telefone').value = pai.telefone;
+        document.getElementById("edit-id_pai").value = pai.id_pai;
+        document.getElementById("edit-nome").value = pai.nome;
+        document.getElementById("edit-cpf").value = pai.cpf;
+        document.getElementById("edit-email").value = pai.email;
+        document.getElementById("edit-telefone").value = pai.telefone;
       }
 
       // Função para cancelar a edição e mostrar o formulário de cadastro novamente
       function cancelEdit() {
         // Exibe o formulário de cadastro
-        document.getElementById('cadastro-form').style.display = 'block';
+        document.getElementById("cadastro-form").style.display = "block";
 
         // Esconde o formulário de edição
-        document.getElementById('edit-form').style.display = 'none';
+        document.getElementById("edit-form").style.display = "none";
       }
     </script>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- Container para os formulários e a tabela -->
+    <div style="display: flex; justify-content: space-between; gap: 20px">
+      <!-- Formulários -->
+      <div style="max-width: 600px; flex: 1">
+        <!-- Formulário de cadastro de novos pais -->
+        <div id="cadastro-form" style="display: block; margin-bottom: 30px">
+          <h1>Cadastrar Novos Pais</h1>
+          <form action="/pais/cadastrar" method="POST">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" required />
+            </div>
 
-<!-- Container para os formulários e a tabela -->
-<div style="display: flex; justify-content: space-between; gap: 20px;">
+            <div class="form-group">
+              <label for="cpf">CPF</label>
+              <input type="text" id="cpf" name="cpf" required />
+            </div>
 
-  <!-- Formulários -->
-  <div style="max-width: 600px; flex: 1;">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
 
-    <!-- Formulário de cadastro de novos pais -->
-    <div id="cadastro-form" style="display: block; margin-bottom: 30px;">
-      <h1>Cadastrar Novos Pais</h1>
-      <form action="/pais/cadastrar" method="POST">
-        <div class="form-group">
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" name="nome" required>
+            <div class="form-group">
+              <label for="telefone">Telefone</label>
+              <input type="tel" id="telefone" name="telefone" required />
+            </div>
+
+            <button type="submit">Cadastrar</button><br /><br />
+          </form>
+          <button
+            style="
+              background-color: blue;
+              color: white;
+              text-align: center;
+              width: 180px;
+              height: 40px;
+            "
+            onclick="window.location.href='/'"
+          >
+            Voltar</button
+          ><br /><br />
         </div>
 
-        <div class="form-group">
-          <label for="cpf">CPF</label>
-          <input type="text" id="cpf" name="cpf" required>
+        <!-- Formulário de edição, inicialmente oculto -->
+        <div id="edit-form" style="display: none; margin-bottom: 30px">
+          <h1>Editar Pai</h1>
+          <form action="/pais/edit" method="POST">
+            <input type="hidden" id="edit-id_pai" name="id_pai" />
+
+            <div class="form-group">
+              <label for="edit-nome">Nome</label>
+              <input type="text" id="edit-nome" name="nome" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-cpf">CPF</label>
+              <input type="text" id="edit-cpf" name="cpf" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-email">Email</label>
+              <input type="email" id="edit-email" name="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-telefone">Telefone</label>
+              <input type="tel" id="edit-telefone" name="telefone" required />
+            </div>
+
+            <button type="submit">Atualizar</button>
+            <button type="button" onclick="cancelEdit()">Cancelar</button>
+          </form>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
-        </div>
+      <!-- Tabela de Pais -->
+      <div style="flex: 1; max-width: 55%">
+        <h1>Lista de Pais</h1>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+          </tr>
+          <% pais.forEach(pai => { %>
+          <tr>
+            <td><%= pai.id_pai %></td>
+            <td><%= pai.nome %></td>
+            <td><%= pai.email %></td>
+            <td><%= pai.telefone %></td>
+            <td>
+              <!-- Botão de excluir -->
+              <form
+                action="/pais/delete/<%= pai.id_pai %>"
+                method="POST"
+                onsubmit="return confirm('Tem certeza que deseja excluir?');"
+              >
+                <input type="hidden" name="_method" value="DELETE" />
+                <button type="submit">Excluir</button>
+              </form>
 
-        <div class="form-group">
-          <label for="telefone">Telefone</label>
-          <input type="tel" id="telefone" name="telefone" required>
-        </div>
-
-        <button type="submit">Cadastrar</button><br><br>
-
-      </form>
-      <button style="background-color: blue; color: white; text-align: center; width: 180px; height: 40px;" onclick="window.location.href='https://localhost:443'"> Voltar </button><br><br>
+              <!-- Botão de editar -->
+              <button
+                data-pai="<%= JSON.stringify(pai) %>"
+                onclick="editPai(this)"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+          <% }); %>
+        </table>
+      </div>
     </div>
-
-    <!-- Formulário de edição, inicialmente oculto -->
-    <div id="edit-form" style="display: none; margin-bottom: 30px;">
-      <h1>Editar Pai</h1>
-      <form action="/pais/edit" method="POST">
-        <input type="hidden" id="edit-id_pai" name="id_pai">
-
-        <div class="form-group">
-          <label for="edit-nome">Nome</label>
-          <input type="text" id="edit-nome" name="nome" required>
-        </div>
-
-        <div class="form-group">
-          <label for="edit-cpf">CPF</label>
-          <input type="text" id="edit-cpf" name="cpf" required>
-        </div>
-
-        <div class="form-group">
-          <label for="edit-email">Email</label>
-          <input type="email" id="edit-email" name="email" required>
-        </div>
-
-        <div class="form-group">
-          <label for="edit-telefone">Telefone</label>
-          <input type="tel" id="edit-telefone" name="telefone" required>
-        </div>
-
-        <button type="submit">Atualizar</button>
-        <button type="button" onclick="cancelEdit()">Cancelar</button>
-      </form>
-    </div>
-
-  </div>
-
-  <!-- Tabela de Pais -->
-  <div style="flex: 1; max-width: 55%;">
-
-    <h1>Lista de Pais</h1>
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Telefone</th>
-        <th>Ações</th>
-      </tr>
-      <% pais.forEach(pai => { %>
-        <tr>
-          <td><%= pai.id_pai %></td>
-          <td><%= pai.nome %></td>
-          <td><%= pai.email %></td>
-          <td><%= pai.telefone %></td>
-          <td>
-            <!-- Botão de excluir -->
-            <form action="/pais/delete/<%= pai.id_pai %>" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir?');">
-              <input type="hidden" name="_method" value="DELETE" />
-              <button type="submit">Excluir</button>
-            </form>
-
-            <!-- Botão de editar -->
-            <button data-pai='<%= JSON.stringify(pai) %>' onclick='editPai(this)'>Editar</button>
-
-          </td>
-        </tr>
-      <% }); %>
-    </table>
-
-  </div>
-
-</div>
-
-</body>
+  </body>
 </html>

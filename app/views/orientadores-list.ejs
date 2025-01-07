@@ -1,125 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/estilo.css" />
     <title>Lista de Orientadores</title>
     <script>
-        // Função para editar um orientador
-        function editOrientador(button) {
-          // Obtém os dados do orientador do atributo data-orientador
-          var orientador = JSON.parse(button.getAttribute('data-orientador'));
-      
-          // Esconde o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "none";
-      
-          // Exibe o formulário de edição
-          document.getElementById("edit-form").style.display = "block";
-      
-          // Preenche os campos do formulário de edição com os dados do orientador
-          document.getElementById("edit-id_orientador").value = orientador.id_orientador;
-          document.getElementById("edit-nome").value = orientador.nome;
-          document.getElementById("edit-especialidade").value = orientador.especialidade;
-          document.getElementById("edit-imagem_url").value = orientador.imagem;
-          
-          // Atualiza a ação do formulário com o id_orientador
-          document.getElementById("edit-form").action = "/orientadores/edit/" + orientador.id_orientador;
-        }
-      
-        // Função para cancelar a edição e mostrar o formulário de cadastro novamente
-        function cancelEdit() {
-          // Exibe o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "block";
-      
-          // Esconde o formulário de edição
-          document.getElementById("edit-form").style.display = "none";
-        }
-      </script>
-      
-</head>
-<body>
+      // Função para editar um orientador
+      function editOrientador(button) {
+        // Obtém os dados do orientador do atributo data-orientador
+        var orientador = JSON.parse(button.getAttribute("data-orientador"));
+
+        // Esconde o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "none";
+
+        // Exibe o formulário de edição
+        document.getElementById("edit-form").style.display = "block";
+
+        // Preenche os campos do formulário de edição com os dados do orientador
+        document.getElementById("edit-id_orientador").value =
+          orientador.id_orientador;
+        document.getElementById("edit-nome").value = orientador.nome;
+        document.getElementById("edit-especialidade").value =
+          orientador.especialidade;
+        document.getElementById("edit-imagem_url").value = orientador.imagem;
+
+        // Atualiza a ação do formulário com o id_orientador
+        document.getElementById("edit-form").action =
+          "/orientadores/edit/" + orientador.id_orientador;
+      }
+
+      // Função para cancelar a edição e mostrar o formulário de cadastro novamente
+      function cancelEdit() {
+        // Exibe o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "block";
+
+        // Esconde o formulário de edição
+        document.getElementById("edit-form").style.display = "none";
+      }
+    </script>
+  </head>
+  <body>
     <div style="display: flex; justify-content: space-between; gap: 20px">
-        <!-- Formulários -->
-        <div style="max-width: 600px; flex: 1">
-            <!-- Formulário de cadastro de novos orientadores -->
-            <div id="cadastro-form" style="display: block; margin-bottom: 30px">
-                <h1>Cadastrar Novo Orientador</h1>
-                <form action="/orientadores" method="POST">
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="especialidade">Especialidade</label>
-                        <input type="text" id="especialidade" name="especialidade" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="imagem_url">URL da Imagem</label>
-                        <input type="text" id="imagem_url" name="imagem_url" />
-                    </div>
-
-                    <button type="submit">Cadastrar</button>
-                </form>
-                <button style="background-color: blue; color: white; width: 180px; height: 40px;" onclick="window.location.href='https://localhost:443'">Voltar</button>
+      <!-- Formulários -->
+      <div style="max-width: 600px; flex: 1">
+        <!-- Formulário de cadastro de novos orientadores -->
+        <div id="cadastro-form" style="display: block; margin-bottom: 30px">
+          <h1>Cadastrar Novo Orientador</h1>
+          <form action="/orientadores" method="POST">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" required />
             </div>
 
-            <!-- Formulário de edição -->
-            <div id="edit-form" style="display: none; margin-bottom: 30px">
-                <h1>Editar Orientador</h1>
-                <form action="/orientadores/edit" method="POST">
-                    <input type="hidden" id="edit-id_orientador" name="id_orientador" />
-
-                    <div class="form-group">
-                        <label for="edit-nome">Nome</label>
-                        <input type="text" id="edit-nome" name="nome" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-especialidade">Especialidade</label>
-                        <input type="text" id="edit-especialidade" name="especialidade" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-imagem_url">URL da Imagem</label>
-                        <input type="text" id="edit-imagem_url" name="imagem_url" />
-                    </div>
-
-                    <button type="submit">Atualizar</button>
-                    <button type="button" onclick="cancelEdit()">Cancelar</button>
-                </form>
+            <div class="form-group">
+              <label for="especialidade">Especialidade</label>
+              <input
+                type="text"
+                id="especialidade"
+                name="especialidade"
+                required
+              />
             </div>
+
+            <div class="form-group">
+              <label for="imagem_url">URL da Imagem</label>
+              <input type="text" id="imagem_url" name="imagem_url" />
+            </div>
+
+            <button type="submit">Cadastrar</button>
+          </form>
+          <button
+            style="
+              background-color: blue;
+              color: white;
+              width: 180px;
+              height: 40px;
+            "
+            onclick="window.location.href='/'"
+          >
+            Voltar
+          </button>
         </div>
 
-        <!-- Tabela de Orientadores -->
-        <div style="flex: 1; max-width: 55%">
-            <h1>Lista de Orientadores</h1>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Especialidade</th>
-                    <th>Imagem</th>
-                    <th>Ações</th>
-                </tr>
-                <% orientadores.forEach(orientador => { %>
-                <tr>
-                    <td><%= orientador.id_orientador %></td>
-                    <td><%= orientador.nome %></td>
-                    <td><%= orientador.especialidade %></td>
-                    <td>
-                        <img src="<%= orientador.imagem %>" alt="Imagem de <%= orientador.nome %>" style="width: 100px; height: auto;" />
-                    </td>
-                    <td>
-                        <button onclick="if(confirm('Tem certeza que deseja excluir?')) { window.location.href = '/orientadores/delete/<%= orientador.id %>'; }">Excluir</button>
-                        <button data-orientador='<%= JSON.stringify(orientador) %>' onclick='editOrientador(this)'>Editar</button>
-                    </td>
-                </tr>
-                <% }); %>
-            </table>
+        <!-- Formulário de edição -->
+        <div id="edit-form" style="display: none; margin-bottom: 30px">
+          <h1>Editar Orientador</h1>
+          <form action="/orientadores/edit" method="POST">
+            <input type="hidden" id="edit-id_orientador" name="id_orientador" />
+
+            <div class="form-group">
+              <label for="edit-nome">Nome</label>
+              <input type="text" id="edit-nome" name="nome" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-especialidade">Especialidade</label>
+              <input
+                type="text"
+                id="edit-especialidade"
+                name="especialidade"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-imagem_url">URL da Imagem</label>
+              <input type="text" id="edit-imagem_url" name="imagem_url" />
+            </div>
+
+            <button type="submit">Atualizar</button>
+            <button type="button" onclick="cancelEdit()">Cancelar</button>
+          </form>
         </div>
+      </div>
+
+      <!-- Tabela de Orientadores -->
+      <div style="flex: 1; max-width: 55%">
+        <h1>Lista de Orientadores</h1>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Especialidade</th>
+            <th>Imagem</th>
+            <th>Ações</th>
+          </tr>
+          <% orientadores.forEach(orientador => { %>
+          <tr>
+            <td><%= orientador.id_orientador %></td>
+            <td><%= orientador.nome %></td>
+            <td><%= orientador.especialidade %></td>
+            <td>
+              <img
+                src="<%= orientador.imagem %>"
+                alt="Imagem de <%= orientador.nome %>"
+                style="width: 100px; height: auto"
+              />
+            </td>
+            <td>
+              <button
+                onclick="if(confirm('Tem certeza que deseja excluir?')) { window.location.href = '/orientadores/delete/<%= orientador.id %>'; }"
+              >
+                Excluir
+              </button>
+              <button
+                data-orientador="<%= JSON.stringify(orientador) %>"
+                onclick="editOrientador(this)"
+              >
+                Editar
+              </button>
+            </td>
+          </tr>
+          <% }); %>
+        </table>
+      </div>
     </div>
-</body>
+  </body>
 </html>

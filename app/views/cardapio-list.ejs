@@ -1,188 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/estilo.css" />
     <title>Cardápio</title>
     <script>
-        // Função para editar um item do cardápio
-        function editItem(button) {
-          // Obtém os dados do item do atributo data-item
-          var item = JSON.parse(button.getAttribute('data-item'));
-      
-          // Esconde o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "none";
-      
-          // Exibe o formulário de edição
-          document.getElementById("edit-form").style.display = "block";
-      
-          // Preenche os campos do formulário de edição com os dados do item
-          document.getElementById("edit-id").value = item.id;
-          document.getElementById("edit-nome").value = item.nome;
-          document.getElementById("edit-descricao").value = item.descricao;
-          document.getElementById("edit-tipo").value = item.tipo;
-          document.getElementById("edit-dia_semana").value = item.dia_semana;
-          document.getElementById("edit-imagem_url").value = item.imagem;
-      
-          // Atualiza a ação do formulário com o id do item
-          document.getElementById("edit-form").action = "/itens/edit/" + item.id;
-        }
-      
-        // Função para cancelar a edição e mostrar o formulário de cadastro novamente
-        function cancelEdit() {
-          // Exibe o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "block";
-      
-          // Esconde o formulário de edição
-          document.getElementById("edit-form").style.display = "none";
-        }
-      </script>
-      
-</head>
-<body>
+      // Função para editar um item do cardápio
+      function editItem(button) {
+        // Obtém os dados do item do atributo data-item
+        var item = JSON.parse(button.getAttribute("data-item"));
+
+        // Esconde o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "none";
+
+        // Exibe o formulário de edição
+        document.getElementById("edit-form").style.display = "block";
+
+        // Preenche os campos do formulário de edição com os dados do item
+        document.getElementById("edit-id").value = item.id;
+        document.getElementById("edit-nome").value = item.nome;
+        document.getElementById("edit-descricao").value = item.descricao;
+        document.getElementById("edit-tipo").value = item.tipo;
+        document.getElementById("edit-dia_semana").value = item.dia_semana;
+        document.getElementById("edit-imagem_url").value = item.imagem;
+
+        // Atualiza a ação do formulário com o id do item
+        document.getElementById("edit-form").action = "/itens/edit/" + item.id;
+      }
+
+      // Função para cancelar a edição e mostrar o formulário de cadastro novamente
+      function cancelEdit() {
+        // Exibe o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "block";
+
+        // Esconde o formulário de edição
+        document.getElementById("edit-form").style.display = "none";
+      }
+    </script>
+  </head>
+  <body>
     <div style="display: flex; justify-content: space-between; gap: 20px">
-        <!-- Formulários -->
-        <div style="max-width: 600px; flex: 1">
-            <!-- Formulário de cadastro -->
-            <div id="cadastro-form" style="display: block; margin-bottom: 30px">
-                <h1>Cadastrar Novo Item</h1>
-                <form action="/cardapio" method="POST">
-                    <div class="form-group">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" required />
-                    </div>
+      <!-- Formulários -->
+      <div style="max-width: 600px; flex: 1">
+        <!-- Formulário de cadastro -->
+        <div id="cadastro-form" style="display: block; margin-bottom: 30px">
+          <h1>Cadastrar Novo Item</h1>
+          <form action="/cardapio" method="POST">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" required />
+            </div>
 
-                    <div class="form-group">
-                        <label for="descricao">Descrição</label>
-                        <textarea id="descricao" name="descricao" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit-tipo">Tipo</label>
-                        <select id="edit-tipo" name="tipo" required>
-                            <option value="Almoço">Almoço</option>
-                            <option value="Café da Manhã">Café da Manhã</option>
-                            <option value="Lanche">Jantar</option>
-                        </select>
-                    </div>
+            <div class="form-group">
+              <label for="descricao">Descrição</label>
+              <textarea id="descricao" name="descricao" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="edit-tipo">Tipo</label>
+              <select id="edit-tipo" name="tipo" required>
+                <option value="Almoço">Almoço</option>
+                <option value="Café da Manhã">Café da Manhã</option>
+                <option value="Lanche">Jantar</option>
+              </select>
+            </div>
 
-                    <div class="form-group">
-                        <label for="dia_semana">Dia da Semana</label>
-                        <select id="dia_semana" name="dia_semana" required>
-                            <option value="Segunda-feira">Segunda-feira</option>
-                            <option value="Terça-feira">Terça-feira</option>
-                            <option value="Quarta-feira">Quarta-feira</option>
-                            <option value="Quinta-feira">Quinta-feira</option>
-                            <option value="Sexta-feira">Sexta-feira</option>
-                            <option value="Sábado">Sábado</option>
-                            <option value="Domingo">Domingo</option>
-                        </select>
-                    </div>
+            <div class="form-group">
+              <label for="dia_semana">Dia da Semana</label>
+              <select id="dia_semana" name="dia_semana" required>
+                <option value="Segunda-feira">Segunda-feira</option>
+                <option value="Terça-feira">Terça-feira</option>
+                <option value="Quarta-feira">Quarta-feira</option>
+                <option value="Quinta-feira">Quinta-feira</option>
+                <option value="Sexta-feira">Sexta-feira</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+              </select>
+            </div>
 
-                    <div class="form-group">
-                        <label for="imagem_url">URL da Imagem</label>
-                        <input type="text" id="imagem_url" name="imagem_url" />
-                    </div>
+            <div class="form-group">
+              <label for="imagem_url">URL da Imagem</label>
+              <input type="text" id="imagem_url" name="imagem_url" />
+            </div>
 
-                    <button type="submit">Cadastrar</button>
-                </form>
+            <button type="submit">Cadastrar</button>
+          </form>
+          <button
+            style="
+              background-color: blue;
+              color: white;
+              text-align: center;
+              width: 180px;
+              height: 40px;
+            "
+            onclick="window.location.href='https://localhost:443'"
+          >
+            Voltar
+          </button>
+          <br /><br />
+        </div>
+
+        <!-- Formulário de edição -->
+        <div id="edit-form" style="display: none; margin-bottom: 30px">
+          <h1>Editar Item</h1>
+          <form action="/cardapio/edit" method="POST">
+            <input type="hidden" id="edit-id" name="id" />
+
+            <div class="form-group">
+              <label for="edit-nome">Nome</label>
+              <input type="text" id="edit-nome" name="nome" required />
+            </div>
+
+            <div class="form-group">
+              <label for="edit-descricao">Descrição</label>
+              <textarea
+                id="edit-descricao"
+                name="descricao"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-tipo">Tipo</label>
+              <select id="edit-tipo" name="tipo" required>
+                <option value="Almoço">Almoço</option>
+                <option value="Café da Manhã">Café da Manhã</option>
+                <option value="Lanche">Jantar</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-dia_semana">Dia da Semana</label>
+              <select id="edit-dia_semana" name="dia_semana" required>
+                <option value="Segunda-feira">Segunda-feira</option>
+                <option value="Terça-feira">Terça-feira</option>
+                <option value="Quarta-feira">Quarta-feira</option>
+                <option value="Quinta-feira">Quinta-feira</option>
+                <option value="Sexta-feira">Sexta-feira</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-imagem_url">URL da Imagem</label>
+              <input type="text" id="edit-imagem_url" name="imagem_url" />
+            </div>
+
+            <button type="submit">Atualizar</button>
+            <button type="button" onclick="cancelEdit()">Cancelar</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabela de Cardápio -->
+      <div style="flex: 1; max-width: 55%">
+        <h1>Cardápio</h1>
+        <table border="1" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Tipo</th>
+              <th>Dia da Semana</th>
+              <th>Imagem</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cardapio.forEach(item => { %>
+            <tr>
+              <td><%= item.nome %></td>
+              <td><%= item.descricao %></td>
+              <td><%= item.tipo %></td>
+              <td><%= item.dia_semana %></td>
+              <td>
+                <img
+                  src="<%= item.imagem %>"
+                  alt="Imagem de <%= item.nome %>"
+                  style="width: 100px; height: auto"
+                />
+              </td>
+              <td>
                 <button
-                    style="
-                        background-color: blue;
-                        color: white;
-                        text-align: center;
-                        width: 180px;
-                        height: 40px;
-                    "
-                    onclick="window.location.href='https://localhost:443'"
+                  onclick="if(confirm('Tem certeza que deseja excluir?')) { window.location.href = '/cardapio/delete/<%= item.id %>'; }"
                 >
-                    Voltar
+                  Excluir
                 </button>
-                <br /><br />
-            </div>
-
-            <!-- Formulário de edição -->
-            <div id="edit-form" style="display: none; margin-bottom: 30px">
-                <h1>Editar Item</h1>
-                <form action="/cardapio/edit" method="POST">
-                    <input type="hidden" id="edit-id" name="id" />
-
-                    <div class="form-group">
-                        <label for="edit-nome">Nome</label>
-                        <input type="text" id="edit-nome" name="nome" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-descricao">Descrição</label>
-                        <textarea id="edit-descricao" name="descricao" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-tipo">Tipo</label>
-                        <select id="edit-tipo" name="tipo" required>
-                            <option value="Almoço">Almoço</option>
-                            <option value="Café da Manhã">Café da Manhã</option>
-                            <option value="Lanche">Jantar</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-dia_semana">Dia da Semana</label>
-                        <select id="edit-dia_semana" name="dia_semana" required>
-                            <option value="Segunda-feira">Segunda-feira</option>
-                            <option value="Terça-feira">Terça-feira</option>
-                            <option value="Quarta-feira">Quarta-feira</option>
-                            <option value="Quinta-feira">Quinta-feira</option>
-                            <option value="Sexta-feira">Sexta-feira</option>
-                            <option value="Sábado">Sábado</option>
-                            <option value="Domingo">Domingo</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-imagem_url">URL da Imagem</label>
-                        <input type="text" id="edit-imagem_url" name="imagem_url" />
-                    </div>
-
-                    <button type="submit">Atualizar</button>
-                    <button type="button" onclick="cancelEdit()">Cancelar</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Tabela de Cardápio -->
-        <div style="flex: 1; max-width: 55%">
-            <h1>Cardápio</h1>
-            <table border="1" style="width: 100%">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Tipo</th>
-                        <th>Dia da Semana</th>
-                        <th>Imagem</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% cardapio.forEach(item => { %>
-                    <tr>
-                        <td><%= item.nome %></td>
-                        <td><%= item.descricao %></td>
-                        <td><%= item.tipo %></td>
-                        <td><%= item.dia_semana %></td>
-                        <td>
-                            <img src="<%= item.imagem %>" alt="Imagem de <%= item.nome %>" style="width: 100px; height: auto;" />
-                        </td>
-                        <td>
-                            <button onclick="if(confirm('Tem certeza que deseja excluir?')) { window.location.href = '/cardapio/delete/<%= item.id %>'; }">Excluir</button>
-                            <button data-pai='<%= JSON.stringify(item) %>' onclick='editItem(this)'>Editar</button>
-                        </td>
-                    </tr>
-                    <% }); %>
-                </tbody>
-            </table>
-        </div>
+                <button
+                  data-pai="<%= JSON.stringify(item) %>"
+                  onclick="editItem(this)"
+                >
+                  Editar
+                </button>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
     </div>
-</body>
+  </body>
 </html>

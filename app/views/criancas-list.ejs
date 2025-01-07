@@ -6,37 +6,37 @@
     <link rel="stylesheet" href="./styles/estilo.css" />
     <title>Lista de Crianças</title>
     <script>
-        // Função para editar uma criança
-        function editCrianca(button) {
-          // Obtém os dados da criança do atributo data-crianca
-          var crianca = JSON.parse(button.getAttribute('data-crianca'));
-      
-          // Esconde o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "none";
-      
-          // Exibe o formulário de edição
-          document.getElementById("edit-form").style.display = "block";
-      
-          // Preenche os campos do formulário de edição com os dados da criança
-          document.getElementById("edit-id_crianca").value = crianca.id;
-          document.getElementById("edit-nome").value = crianca.nome;
-          document.getElementById("edit-idade").value = crianca.idade;
-          document.getElementById("edit-alergias").value = crianca.alergias;
-      
-          // Atualiza a ação do formulário com o id_crianca
-          document.getElementById("edit-form").action = "/criancas/edit/" + crianca.id;
-        }
-      
-        // Função para cancelar a edição e mostrar o formulário de cadastro novamente
-        function cancelEdit() {
-          // Exibe o formulário de cadastro
-          document.getElementById("cadastro-form").style.display = "block";
-      
-          // Esconde o formulário de edição
-          document.getElementById("edit-form").style.display = "none";
-        }
-      </script>
-      
+      // Função para editar uma criança
+      function editCrianca(button) {
+        // Obtém os dados da criança do atributo data-crianca
+        var crianca = JSON.parse(button.getAttribute("data-crianca"));
+
+        // Esconde o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "none";
+
+        // Exibe o formulário de edição
+        document.getElementById("edit-form").style.display = "block";
+
+        // Preenche os campos do formulário de edição com os dados da criança
+        document.getElementById("edit-id_crianca").value = crianca.id;
+        document.getElementById("edit-nome").value = crianca.nome;
+        document.getElementById("edit-idade").value = crianca.idade;
+        document.getElementById("edit-alergias").value = crianca.alergias;
+
+        // Atualiza a ação do formulário com o id_crianca
+        document.getElementById("edit-form").action =
+          "/criancas/edit/" + crianca.id;
+      }
+
+      // Função para cancelar a edição e mostrar o formulário de cadastro novamente
+      function cancelEdit() {
+        // Exibe o formulário de cadastro
+        document.getElementById("cadastro-form").style.display = "block";
+
+        // Esconde o formulário de edição
+        document.getElementById("edit-form").style.display = "none";
+      }
+    </script>
   </head>
   <body>
     <!-- Container para os formulários e a tabela -->
@@ -52,42 +52,36 @@
               <input type="text" id="nome" name="nome" required />
             </div>
 
-
             <div class="form-group">
               <label for="idade">Idade</label>
               <input type="number" id="idade" name="idade" required />
             </div>
-
 
             <div class="form-group">
               <label for="alergias">Alergias</label>
               <input type="text" id="alergias" name="alergias" />
             </div>
 
-
             <div class="form-group">
               <label for="id_pai">ID do Pai</label>
               <input type="number" id="id_pai" name="id_pai" required />
             </div>
 
-
             <button type="submit">Cadastrar</button><br /><br />
-
-        </form>
-        <button
-          style="
-            background-color: blue;
-            color: white;
-            text-align: center;
-            width: 180px;
-            height: 40px;
-          "
-          onclick="window.location.href='https://localhost:443'"
-        >
-          Voltar</button
-        ><br /><br />
+          </form>
+          <button
+            style="
+              background-color: blue;
+              color: white;
+              text-align: center;
+              width: 180px;
+              height: 40px;
+            "
+            onclick="window.location.href='/'"
+          >
+            Voltar</button
+          ><br /><br />
         </div>
-
 
         <!-- Formulário de edição, inicialmente oculto -->
         <div id="edit-form" style="display: none; margin-bottom: 30px">
@@ -95,31 +89,26 @@
           <form action="/criancas/edit" method="POST">
             <input type="hidden" id="edit-id_crianca" name="id_crianca" />
 
-
             <div class="form-group">
               <label for="edit-nome">Nome</label>
               <input type="text" id="edit-nome" name="nome" required />
             </div>
-
 
             <div class="form-group">
               <label for="edit-idade">Idade</label>
               <input type="number" id="edit-idade" name="idade" required />
             </div>
 
-
             <div class="form-group">
               <label for="edit-alergias">Alergias</label>
               <input type="text" id="edit-alergias" name="alergias" />
             </div>
-
 
             <button type="submit">Atualizar</button>
             <button type="button" onclick="cancelEdit()">Cancelar</button>
           </form>
         </div>
       </div>
-
 
       <!-- Tabela de Crianças -->
       <div style="flex: 1; max-width: 55%">
@@ -146,9 +135,13 @@
                 Excluir
               </button>
 
-
               <!-- Botão de editar -->
-              <button data-crianca='<%= JSON.stringify(crianca) %>' onclick='editCrianca(this)'>Editar</button>
+              <button
+                data-crianca="<%= JSON.stringify(crianca) %>"
+                onclick="editCrianca(this)"
+              >
+                Editar
+              </button>
             </td>
           </tr>
           <% }); %>
